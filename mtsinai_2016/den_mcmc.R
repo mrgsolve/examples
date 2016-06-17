@@ -1,12 +1,20 @@
+##' ---
+##' output: md_document
+##' ---
+
+#+ messages=FALSE
 library(mrgsolve)
 library(magrittr) 
 library(dplyr)
 library(MCMCpack)
 source("functions.R")
 
+#+
 mod <- mread("denpk", "model")
+param(mod)
+init(mod)
 
-## Log prior density without constants:
+##' Log prior density without constants:
 nprior <- function(theta,mu=0,tau2=1E-6) {
   -0.5*tau2*(theta-mu)^2
 }
@@ -14,6 +22,7 @@ igprior <- function(theta,a=0.01,b=0.01) {
   -(a+1)*log(theta) - b/theta
 }
 
+#+
 mcfun <- function(par,d,n,pred=FALSE) {
   
   par <- setNames(par,n)
@@ -50,17 +59,19 @@ mcfun <- function(par,d,n,pred=FALSE) {
   return(sum(data.like,sum.prior))
 }
 
+#+
 set.seed(101)
-
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+#+
 theta <- log(c(DENCL=6,DENVC=3000, DENVMAX=1000, DENVP=3000, sig2=0.1))
 which_pk <- grep("DEN", names(theta))
 which_sig <- grep("sig", names(theta))
 
-
+#+
 contr <- list(fnscale = -1, trace = 1,  maxit = 1500, parscale = theta)
 
+#+
 fit <- MCMCmetrop1R(fun=mcfun,
                     theta.init = theta,
                     burnin=2000, mcmc=2000,
@@ -69,6 +80,7 @@ fit <- MCMCmetrop1R(fun=mcfun,
                     verbose = 100, tune=2,
                     optim.control = contr)
 
+#+
 summary(exp(fit))
 
 as.numeric(param(mod))[names(theta)]

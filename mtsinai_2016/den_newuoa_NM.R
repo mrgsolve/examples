@@ -1,3 +1,8 @@
+##' ---
+##' output: md_document
+##' ---
+
+#+ message=FALSE
 library(mrgsolve)
 library(minqa)
 library(methods)
@@ -5,9 +10,12 @@ library(magrittr)
 library(dplyr)
 source("functions.R")
 
-
+#+
 mod<- mread("denpk", "model")
+param(mod)
+init(mod)
 
+#+
 ols <- function(par,d,n,pred=FALSE) {
   
   par <- setNames(lapply(par,exp),n)
@@ -32,10 +40,11 @@ ols <- function(par,d,n,pred=FALSE) {
   
 }
 
+#+
 set.seed(101)
-
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+#+
 theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
 
 ##' Fit with minqa::newuoa
@@ -45,6 +54,7 @@ fit1 <- newuoa(par=theta, fn=ols, d=d, n=names(theta), control=list(iprint=5))
 contr <- list(trace=2, parscale=theta, maxit=1500)
 fit2 <- optim(par=theta, fn=ols, d=d, n=names(theta), control=contr)
 
+#+
 exp(fit1$par)
 exp(fit2$par)
 as.numeric(param(mod))[names(theta)]

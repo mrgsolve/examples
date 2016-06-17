@@ -1,11 +1,20 @@
+##' ---
+##' output: md_document
+##' ---
+
+#+ messages=FALSE
 library(mrgsolve)
 library(DEoptim)
 library(magrittr) 
 library(dplyr)
 source("functions.R")
 
+#+
 mod <- mread("denpk", "model")
+param(mod)
+init(mod)
 
+#+
 ols <- function(par,d,n,pred=FALSE) {
   
   par <- setNames(lapply(par,exp),n)
@@ -31,9 +40,11 @@ ols <- function(par,d,n,pred=FALSE) {
   return(obj)
 }
 
+#+
 set.seed(101)
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+#+
 theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
 upper<-log(c(30,10000,10000,10000))
 lower<-log(c(0.001, 0.001, 0.1, 0.1))
@@ -43,6 +54,7 @@ fit <- DEoptim(ols,d=d,n = names(theta),
                upper=upper, lower=lower,
                control=list(itermax=300))
 
+#+
 exp(fit$optim$bestmem)
 
 as.numeric(param(mod))[names(theta)]

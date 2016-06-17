@@ -5,6 +5,8 @@
     library(dplyr)
     source("functions.R")
 
+The model
+
     mod<- mread("denpk", "model")
 
     ## Compiling denpk__cpp.cpp ...
@@ -27,6 +29,47 @@
     ##  name          value . name        value
     ##  DENCENT (2)   0     | DENSC (1)   0    
     ##  DENPER (3)    0     | . ...       .
+
+    see(mod)
+
+    ## 
+    ## Model file:  denpk.cpp 
+    ##  $GLOBAL
+    ##  #define DMABCP (DENCENT/DENVC)
+    ##  #define DENMOL (DENCENT/DENVC/150000)*1000*1000
+    ##  #define DENCLNL (DENVMAX/(DENKM+DMABCP))
+    ##  
+    ##  $PARAM
+    ##  DENVMAX = 3110
+    ##  DENKM = 188
+    ##  DENVC = 2340
+    ##  DENVP = 1324  
+    ##  DENCL = 2.75
+    ##  
+    ##  $FIXED
+    ##  DENQ = 18.67 
+    ##  DENKA = 0.00592
+    ##  DENF = 0.72
+    ##  
+    ##  $CMT DENSC DENCENT DENPER
+    ##  
+    ##  $MAIN F_DENSC=DENF;
+    ##  
+    ##  $ODE
+    ##  dxdt_DENSC =  -DENKA*DENSC;
+    ##  dxdt_DENCENT = DENKA*DENSC + DENQ*DENPER/DENVP - (DENQ+DENCL+DENCLNL)*DENCENT/DENVC ;
+    ##  dxdt_DENPER =  DENQ*DENCENT/DENVC - DENQ*DENPER/DENVP;
+    ##  
+    ##  $SIGMA 0.0449
+    ##  
+    ##  $TABLE
+    ##  double DENCP   = (DENCENT/DENVC/150000)*1000;
+    ##  double DENmMOL = DENCP*(1+EPS(1)) ;
+    ##  
+    ##   
+    ##  $CAPTURE DENmMOL DENCP
+
+Function returning the objective function
 
     ols <- function(par,d,n,pred=FALSE) {
       
@@ -52,12 +95,16 @@
       
     }
 
+Simulate an abbreviated data set
+
     set.seed(101)
     d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+Initial estimates
+
     theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
 
-Fit with minqa::newuoa
+Fit with `minqa::newuoa`
 
     fit1 <- newuoa(par=theta, fn=ols, d=d, n=names(theta), control=list(iprint=5))
 
@@ -134,7 +181,7 @@ Fit with minqa::newuoa
     ## At return
     ## eval: 308 fn:      4.9561497 par:  1.00020  7.71015  8.08017  7.29107
 
-Fit with stats:: optim
+Fit with `stats:: optim`
 
     contr <- list(trace=2, parscale=theta, maxit=1500)
     fit2 <- optim(par=theta, fn=ols, d=d, n=names(theta), control=contr)
@@ -345,6 +392,8 @@ Fit with stats:: optim
     ## LO-REDUCTION     403 4.956161 4.956151
     ## Exiting from Nelder Mead minimizer
     ##     405 function evaluations used
+
+Results
 
     exp(fit1$par)
 

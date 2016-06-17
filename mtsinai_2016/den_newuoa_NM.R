@@ -10,12 +10,13 @@ library(magrittr)
 library(dplyr)
 source("functions.R")
 
-#+
+##' The model
 mod<- mread("denpk", "model")
 param(mod)
 init(mod)
+see(mod)
 
-#+
+##' Function returning the objective function
 ols <- function(par,d,n,pred=FALSE) {
   
   par <- setNames(lapply(par,exp),n)
@@ -40,21 +41,21 @@ ols <- function(par,d,n,pred=FALSE) {
   
 }
 
-#+
+##' Simulate an abbreviated data set
 set.seed(101)
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
-#+
+##' Initial estimates
 theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
 
-##' Fit with minqa::newuoa
+##' Fit with `minqa::newuoa`
 fit1 <- newuoa(par=theta, fn=ols, d=d, n=names(theta), control=list(iprint=5))
 
-##' Fit with stats:: optim
+##' Fit with `stats:: optim`
 contr <- list(trace=2, parscale=theta, maxit=1500)
 fit2 <- optim(par=theta, fn=ols, d=d, n=names(theta), control=contr)
 
-#+
+##' Results
 exp(fit1$par)
 exp(fit2$par)
 as.numeric(param(mod))[names(theta)]

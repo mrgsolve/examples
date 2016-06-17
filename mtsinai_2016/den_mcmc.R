@@ -2,7 +2,7 @@
 ##' output: md_document
 ##' ---
 
-#+ messages=FALSE
+#+ message=FALSE
 library(mrgsolve)
 library(magrittr) 
 library(dplyr)
@@ -10,6 +10,7 @@ library(MCMCpack)
 source("functions.R")
 
 ##' The model
+#+ message=FALSE
 mod <- mread("denpk", "model")
 param(mod)
 init(mod)

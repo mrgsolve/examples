@@ -8,11 +8,6 @@
 The model
 
     mod<- mread("denpk", "model")
-
-    ## Compiling denpk__cpp.cpp ...
-
-    ## done.
-
     param(mod)
 
     ## 

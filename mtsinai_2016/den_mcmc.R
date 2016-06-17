@@ -70,7 +70,7 @@ which_pk <- grep("DEN", names(theta))
 which_sig <- grep("sig", names(theta))
 
 ##' Fit with `MCMCpack::MCMCmetrop1R`
-contr <- list(fnscale = -1, trace = 1,  maxit = 1500, parscale = theta)
+contr <- list(fnscale = -1, trace = 0,  maxit = 1500, parscale = theta)
 
 #+
 fit <- MCMCmetrop1R(fun=mcfun,

@@ -1,48 +1,12 @@
     library(mrgsolve)
-
-    ## mrgsolve: Community Edition
-
-    ## www.github.com/metrumresearchgroup/mrgsolve
-
     library(DEoptim)
-
-    ## 
-    ## DEoptim package
-    ## Differential Evolution algorithm in R
-    ## Authors: D. Ardia, K. Mullen, B. Peterson and J. Ulrich
-
     library(magrittr) 
-
-    ## 
-    ## Attaching package: 'magrittr'
-
-    ## The following object is masked from 'package:mrgsolve':
-    ## 
-    ##     mod
-
     library(dplyr)
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
     source("functions.R")
 
 The model
 
     mod <- mread("denpk", "model")
-
-    ## Compiling denpk__cpp.cpp ...
-
-    ## done.
-
     param(mod)
 
     ## 

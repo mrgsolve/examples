@@ -9,7 +9,7 @@ library(dplyr)
 library(MCMCpack)
 source("functions.R")
 
-#+
+##' The model
 mod <- mread("denpk", "model")
 param(mod)
 init(mod)
@@ -22,7 +22,7 @@ igprior <- function(theta,a=0.01,b=0.01) {
   -(a+1)*log(theta) - b/theta
 }
 
-#+
+##' Returns log prior + log likelihood
 mcfun <- function(par,d,n,pred=FALSE) {
   
   par <- setNames(par,n)
@@ -59,16 +59,16 @@ mcfun <- function(par,d,n,pred=FALSE) {
   return(sum(data.like,sum.prior))
 }
 
-#+
+##' Simulate data
 set.seed(101)
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
-#+
+##' Initial estimates
 theta <- log(c(DENCL=6,DENVC=3000, DENVMAX=1000, DENVP=3000, sig2=0.1))
 which_pk <- grep("DEN", names(theta))
 which_sig <- grep("sig", names(theta))
 
-#+
+##' Fit with `MCMCpack::MCMCmetrop1R`
 contr <- list(fnscale = -1, trace = 1,  maxit = 1500, parscale = theta)
 
 #+
@@ -80,7 +80,7 @@ fit <- MCMCmetrop1R(fun=mcfun,
                     verbose = 100, tune=2,
                     optim.control = contr)
 
-#+
+##' Results
 summary(exp(fit))
 
 as.numeric(param(mod))[names(theta)]

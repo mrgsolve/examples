@@ -9,12 +9,12 @@ library(magrittr)
 library(dplyr)
 source("functions.R")
 
-#+
+##' The model
 mod <- mread("denpk", "model")
 param(mod)
 init(mod)
 
-#+
+##' Returns the value of objective function
 ols <- function(par,d,n,pred=FALSE) {
   
   par <- setNames(lapply(par,exp),n)
@@ -40,21 +40,22 @@ ols <- function(par,d,n,pred=FALSE) {
   return(obj)
 }
 
-#+
+##' Simulate a data set
 set.seed(101)
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
-#+
+##' Initial estimates
+##' `DEoptim` uses `lower` and `upper`
 theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
 upper<-log(c(30,10000,10000,10000))
 lower<-log(c(0.001, 0.001, 0.1, 0.1))
 
-##' DEoptim fit
+##' Fit with `DEoptim::DEoptim`
 fit <- DEoptim(ols,d=d,n = names(theta),
                upper=upper, lower=lower,
                control=list(itermax=300))
 
-#+
+##' Results
 exp(fit$optim$bestmem)
 
 as.numeric(param(mod))[names(theta)]

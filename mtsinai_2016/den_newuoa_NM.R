@@ -1,0 +1,57 @@
+library(mrgsolve)
+library(minqa)
+library(methods)
+library(magrittr) 
+library(dplyr)
+source("functions.R")
+
+
+mod<- mread("denpk", "model")
+
+ols <- function(par,d,n,pred=FALSE) {
+  
+  par <- setNames(lapply(par,exp),n)
+  
+  out<- 
+    mod %>% 
+    param(par) %>%
+    data_set(d) %>% 
+    Req(DENCP) %>% 
+    drop.re %>%
+    mrgsim(obsonly=TRUE) %>%
+    filter(!is.na(DENCP) & time!=0)
+  
+  if(pred) return(out)
+  
+  d %<>% filter(time > 0 & evid==0)
+  
+  log.yhat <- log(out$DENCP)
+  log.y    <- log(d$DENmMOL)
+  
+  return(sum((log.y - log.yhat)^2))
+  
+}
+
+set.seed(101)
+
+d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
+
+theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
+
+##' Fit with minqa::newuoa
+fit1 <- newuoa(par=theta, fn=ols, d=d, n=names(theta), control=list(iprint=5))
+
+##' Fit with stats:: optim
+contr <- list(trace=2, parscale=theta, maxit=1500)
+fit2 <- optim(par=theta, fn=ols, d=d, n=names(theta), control=contr)
+
+exp(fit1$par)
+exp(fit2$par)
+as.numeric(param(mod))[names(theta)]
+
+
+
+
+
+
+

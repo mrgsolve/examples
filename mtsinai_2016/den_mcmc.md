@@ -76,6 +76,16 @@ Simulate data
     set.seed(101)
     d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+    head(as.data.frame(d))
+
+    ##   ID time evid   amt cmt   ii addl dose  DENmMOL irep
+    ## 1  1    0    0 0e+00   0    0    0   10 0.000000    1
+    ## 2  1    0    1 1e+07   1 4032    3   10 0.000000    1
+    ## 3  1   12    0 0e+00   0    0    0   10 1.655885    1
+    ## 4  1   34    0 0e+00   0    0    0   10 3.758968    1
+    ## 5  1  168    0 0e+00   0    0    0   10 5.909730    1
+    ## 6  1  336    0 0e+00   0    0    0   10 6.741199    1
+
 Initial estimates
 
     theta <- log(c(DENCL=6,DENVC=3000, DENVMAX=1000, DENVP=3000, sig2=0.1))

@@ -64,6 +64,10 @@ mcfun <- function(par,d,n,pred=FALSE) {
 set.seed(101)
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+head(as.data.frame(d))
+
+
+
 ##' Initial estimates
 theta <- log(c(DENCL=6,DENVC=3000, DENVMAX=1000, DENVP=3000, sig2=0.1))
 which_pk <- grep("DEN", names(theta))

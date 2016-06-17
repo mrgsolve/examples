@@ -15,7 +15,7 @@ MCMC:
 	Rscript den_mcmc.R
 
 render:
-	Rscript -e 'library(rmarkdown)' -e 'render("den_newuoa_NM.R")'
+	Rscript -e 'library(rmarkdown)' -e 'render("den_newuoa_NM.R"); render("den_DEoptim.R"); render("den_mcmc.R")'
 
 
 

@@ -1,4 +1,6 @@
 From `isop-phmx` study group meeting 24 June, 2016
+- Using a PK/PD model for simulation-based assessment of probability of technical success in drug development
+- https://github.com/isop-phmx/studyGroup/issues/22
 
 To run the code, you will need to install these packages:
 

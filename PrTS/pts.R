@@ -66,22 +66,16 @@ library(ggplot2)
 library(parallel)
 library(magrittr)
 source("src/functions.R")
-library(rmarkdown)
-library(knitr)
+
 
 RNGkind("L'Ecuyer-CMRG")
 options(mc.cores=32)
 mc.reset.stream()
 
 theme_update(legend.position="top")
-opts_chunk$set(comment='.',fig.align="center")
 
 #+ echo=FALSE
 n.mc.sim <- 320
-if(FALSE) {
-  rmarkdown::render("pts.R")
-}
-
 options(mrgsolve_mread_quiet=TRUE)
 
 ##'
@@ -362,9 +356,11 @@ sum %>%
 ##' # Simulate model parameters from covariance matrix (of the estimate)
 ##'
 
+if(!require(metrumrg)) stop("Install metrumrg package first.")
+
 nsimpar <- 2500
 nwish <- 300
-mc.cores <- 32
+mc.cores <- ifelse(.Platform$OS.type=="windows", 1,32)
 options(mc.cores=mc.cores)
 
 ##'

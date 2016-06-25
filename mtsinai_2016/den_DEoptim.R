@@ -45,6 +45,8 @@ ols <- function(par,d,n,pred=FALSE) {
 set.seed(101)
 d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
 
+head(as.data.frame(d))
+
 ##' Initial estimates
 ##' `DEoptim` uses `lower` and `upper`
 theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))

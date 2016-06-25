@@ -1,0 +1,6 @@
+Fri May 29 20:33:22 2015
+cannot locate *par.tab in control stream for run 
+cannot locate *.msf in control stream for run 
+qsub -N Run1001 -o model/nonmem//1001 -e model/nonmem//1001   -V  -j y -q all.q -sync y -shell n -b y -cwd  -pe orte 8 perl -S /opt/NONMEM/nm73/nmqual/autolog.pl /opt/NONMEM/nm73/nmqual/log.xml para ce model/nonmem//1001 1001
+Run 1001 has exit code 0
+cannot locate *par.tab in control stream for run 1001

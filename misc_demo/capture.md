@@ -27,10 +27,10 @@ $TABLE
 table(CP) = CENT/VC;
 ```
 
-It is now more efficient to always use `$CAPTURE` rather than `table()`. For
-----------------------------------------------------------------------------
+It is now more efficient to always use `$CAPTURE` rather than `table()`.
+------------------------------------------------------------------------
 
-example
+For example:
 
 ``` c
 
@@ -171,5 +171,5 @@ benchmark(sim(mtable, nid=100),
 ```
 
     ##                     test replications elapsed relative
-    ## 2   sim(mcap, nid = 100)          100   8.851    1.000
-    ## 1 sim(mtable, nid = 100)          100  13.904    1.571
+    ## 2   sim(mcap, nid = 100)          100   8.941    1.000
+    ## 1 sim(mtable, nid = 100)          100  13.881    1.553

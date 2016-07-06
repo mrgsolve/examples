@@ -38,8 +38,8 @@ table(CLi) = CLi;
 $TABLE
 table(CP) = CENT/VC;
 
-##' ## It is now more efficient to always use `$CAPTURE` rather than `table()`.  For
-##' example
+##' ## It is now more efficient to always use `$CAPTURE` rather than `table()`.  
+##' For example:
 ##' 
 #+ engine="c", eval=FALSE
 

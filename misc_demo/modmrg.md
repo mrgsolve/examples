@@ -54,3 +54,23 @@ plot(out,logChange~time,groups=delta,auto.key=list(columns=4))
 ```
 
 ![](img/modmrg-unnamed-chunk-4-1.png)
+
+### Ooops
+
+``` r
+mod <- mread("kylebaron", modlib())
+```
+
+    . mrgsolve internal library:
+
+    .   pk1cmt
+    .   pk2cmt
+    .   pk3cmt
+    .   irm1
+    .   irm2
+    .   irm3
+    .   emax
+    .   tmdd
+    .   viral1
+    .   viral2
+    .   effect

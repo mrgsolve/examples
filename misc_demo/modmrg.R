@@ -38,4 +38,6 @@ out <-
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))
 
+##' ### Ooops 
 
+mod <- mread("kylebaron", modlib())

@@ -12,7 +12,7 @@ library(mrgsolve)
 ### PK model
 
 ``` r
-mod <- mread("pk2cmt", mrgmod())
+mod <- mread("pk2cmt", modlib())
 ```
 
     . Compiling pk2cmt ...
@@ -31,7 +31,7 @@ mod %>%
 ### Viral model
 
 ``` r
-mod <- mread("viral1",mrgmod())
+mod <- mread("viral1",modlib())
 ```
 
     . Compiling viral1 ...

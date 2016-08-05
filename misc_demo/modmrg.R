@@ -14,7 +14,7 @@ library(mrgsolve)
 
 
 ##' ### PK model
-mod <- mread("pk2cmt", mrgmod())
+mod <- mread("pk2cmt", modlib())
 
 mod %>%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %>%
@@ -23,7 +23,7 @@ mod %>%
 
 
 ##' ### Viral model
-mod <- mread("viral1",mrgmod())
+mod <- mread("viral1",modlib())
 
 e <- 
   ev(amt=50, cmt="expos",time=2) + 

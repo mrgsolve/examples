@@ -46,4 +46,23 @@ out <- foreach(i=1:10) %dorng% {
 
 out
 
+
+out <- foreach(i=1:10) %dorng% {
+  mod <- mrgsolve:::house() %>% ev(amt=100)
+  mod %>% mrgsim %>% as.tbl
+} %>% bind_rows
+
+
+out
+
+set.seed(1010)
+out <- foreach(i=1:10) %dorng% {
+  mod <- mrgsolve:::house() %>% ev(amt=100)
+  mod %>% mrgsim %>% as.tbl
+} %>% bind_rows
+
+
+out
+
+
 stopCluster(cl)

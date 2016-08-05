@@ -47,6 +47,7 @@ out <- foreach(i=1:10) %dorng% {
 out
 
 
+## Here is the mrgsolve:::house() example
 out <- foreach(i=1:10) %dorng% {
   mod <- mrgsolve:::house() %>% ev(amt=100)
   mod %>% mrgsim %>% as.tbl

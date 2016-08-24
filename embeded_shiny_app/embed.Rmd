@@ -1,0 +1,16 @@
+---
+output: html_document
+runtime: shiny
+---
+
+# Embed example
+
+```{r, echo = FALSE}
+shinyAppDir(
+  getwd(),
+  options=list(
+    width="100%", height=700
+  )
+)
+```
+

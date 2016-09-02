@@ -102,6 +102,14 @@ mrgsolve:::details(mod)
     ## 2   CMT CENT Central compartment    mg       .
     ## 3   CMT RESP            Response units       .
 
+``` r
+list.files(soloc(mod))
+```
+
+    ## [1] "annot-details.RDS"        "annot-mread-source.cpp"  
+    ## [3] "annot-mread-source.o"     "annot-mread-source.so"   
+    ## [5] "annot-so-16fa48cdfe00.so"
+
 Details from `mrgsolve:::house()`
 =================================
 
@@ -130,9 +138,3 @@ mrgsolve:::details(mod) %>% (dplyr::bind_rows)
     ## 16     CMT  RESP                 Response unitless       .
     ## 17 CAPTURE    DV       Dependent variable    ng/ml       .
     ## 18 CAPTURE    CP     Plasma concentration    ng/ml       .
-
-``` r
-list.files(soloc(mod))
-```
-
-    ## [1] "mrgsolve.so"

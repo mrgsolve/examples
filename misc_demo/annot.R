@@ -88,10 +88,12 @@ init(mod)
 ##' 
 mrgsolve:::details(mod) 
 
+#+
+list.files(soloc(mod))
+
+
 ##' # Details from `mrgsolve:::house()`
 mod <- mrgsolve:::house()
 
 mrgsolve:::details(mod) %>% (dplyr::bind_rows)
 
-#+
-list.files(soloc(mod))

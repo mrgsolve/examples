@@ -41,9 +41,22 @@ Model annotations are parsed and made available as an `R` object
 
 If we compile the two blocks above we get
 
-    ## mrgsolve: Community Edition
+``` r
+library(mrgsolve)
+options(mrgsolve_mread_quiet=TRUE)
+code <- '
+$PARAM >> annotated  = TRUE
 
-    ## www.github.com/metrumresearchgroup/mrgsolve
+CL   : 1.25 : Clearance (L/hr) [PK]
+VC   : 20.8 : Volume of distribution (L) [PK]
+EMAX : 33   : Maximum effect (.) [PD]
+
+$CMT >> annotated = TRUE
+GUT  : Dosing compartment (mg)
+CENT : Central compartment (mg) 
+RESP : Response (units)
+'
+```
 
 ``` r
 mod <- mcode("annot", code)
@@ -74,16 +87,20 @@ init(mod)
 We can retreive the model annotations like this
 
 ``` r
-mrgsolve:::details(mod) %>% (dplyr::bind_rows)
+mrgsolve:::details(mod) 
 ```
 
-    ##   block name                  descr  unit options
-    ## 1 PARAM   CL              Clearance  L/hr      PK
-    ## 2 PARAM   VC Volume of distribution     L      PK
-    ## 3 PARAM EMAX         Maximum effect     .      PD
-    ## 4   CMT  GUT     Dosing compartment    mg       .
-    ## 5   CMT CENT    Central compartment    mg       .
-    ## 6   CMT RESP               Response units       .
+    ## [[1]]
+    ##   block name                  descr unit options
+    ## 1 PARAM   CL              Clearance L/hr      PK
+    ## 2 PARAM   VC Volume of distribution    L      PK
+    ## 3 PARAM EMAX         Maximum effect    .      PD
+    ## 
+    ## [[2]]
+    ##   block name               descr  unit options
+    ## 1   CMT  GUT  Dosing compartment    mg       .
+    ## 2   CMT CENT Central compartment    mg       .
+    ## 3   CMT RESP            Response units       .
 
 ``` r
 list.files(soloc(mod))
@@ -91,4 +108,4 @@ list.files(soloc(mod))
 
     ## [1] "annot-details.RDS"       "annot-mread-source.cpp" 
     ## [3] "annot-mread-source.o"    "annot-mread-source.so"  
-    ## [5] "annot-so-a2e6aa3010a.so"
+    ## [5] "annot-so-a6310466f02.so"

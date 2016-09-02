@@ -53,7 +53,7 @@ RESP : Response (units)
 ##' 
 ##' 
 ##' If we compile the two blocks above we get
-#+ echo=FALSE
+#+ message=FALSE
 
 library(mrgsolve)
 options(mrgsolve_mread_quiet=TRUE)
@@ -86,7 +86,6 @@ init(mod)
 ##' We can retreive the model annotations like this
 ##' 
 ##' 
-mrgsolve:::details(mod) %>% (dplyr::bind_rows)
-
+mrgsolve:::details(mod) 
 #+
 list.files(soloc(mod))

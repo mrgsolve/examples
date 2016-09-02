@@ -5,7 +5,7 @@ knitr::opts_chunk$set(comment='.')
 Annotated model specification
 =============================
 
-A recent addition to the development version of `mrgsolve` allows users to add annotation to their model specification. For each parameter or compartment element in the model, users can add a description of that element, a unit, and as well as other parsed tags for that element. Annotations can be added to the following blocks: `$PARAM`, `$FIXED`, and `$THETA` to annotate parameters and `$CMT`, `$INIT`, and `$VCMT` to annotate compartments.
+A recent addition to the development version of `mrgsolve` allows users to add annotation to their model specification. For each parameter or compartment element in the model, users can add a description of that element, a unit, and as well as other parsed tags for that element. Annotations can be added to the following blocks: `$PARAM`, `$FIXED`, and `$THETA` to annotate parameters and `$CMT`, `$INIT`, and `$VCMT` to annotate compartments. Model outputs may also be annotated in `$CAPTURE`.
 
 For example
 -----------
@@ -110,9 +110,9 @@ mrgsolve:::details(mod)
 list.files(soloc(mod))
 ```
 
-    . [1] "annot-details.RDS"        "annot-mread-source.cpp"  
-    . [3] "annot-mread-source.o"     "annot-mread-source.so"   
-    . [5] "annot-so-17403a6877d9.so"
+    . [1] "annot-details.RDS"       "annot-mread-source.cpp" 
+    . [3] "annot-mread-source.o"    "annot-mread-source.so"  
+    . [5] "annot-so-1762cd275d6.so"
 
 Details from `mrgsolve:::house()`
 =================================

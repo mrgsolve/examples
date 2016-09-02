@@ -14,7 +14,8 @@ knitr::opts_chunk$set(comment='.')
 ##' or compartment element in the model, users can add a description of that element, 
 ##' a unit, and as well as other parsed tags for that element.  Annotations can be added 
 ##' to the following blocks: `$PARAM`, `$FIXED`, and `$THETA` to annotate parameters 
-##' and `$CMT`, `$INIT`, and `$VCMT` to annotate compartments.
+##' and `$CMT`, `$INIT`, and `$VCMT` to annotate compartments. Model outputs
+##' may also be annotated in `$CAPTURE`.
 ##' 
 ##' ## For example
 ##' 

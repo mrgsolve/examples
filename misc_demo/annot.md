@@ -102,10 +102,37 @@ mrgsolve:::details(mod)
     ## 2   CMT CENT Central compartment    mg       .
     ## 3   CMT RESP            Response units       .
 
+Details from `mrgsolve:::house()`
+=================================
+
+``` r
+mod <- mrgsolve:::house()
+
+mrgsolve:::details(mod) %>% (dplyr::bind_rows)
+```
+
+    ##      block  name                    descr     unit options
+    ## 1    PARAM    CL                Clearance     L/hr       .
+    ## 2    PARAM    VC   Volume of distribution        L       .
+    ## 3    PARAM    KA Absorption rate constant     1/hr       .
+    ## 4    PARAM    F1 Bioavailability fraction        .       .
+    ## 5    PARAM    WT                   Weight       kg       .
+    ## 6    PARAM   SEX     Covariate female sex        .       .
+    ## 7    PARAM  WTCL        Exponent WT on CL        .       .
+    ## 8    PARAM  WTVC        Exponent WT on VC        .       .
+    ## 9    PARAM SEXCL    Prop cov effect on CL        .       .
+    ## 10   PARAM SEXVC    Prop cov effect on VC        .       .
+    ## 11   PARAM   KIN  Resp prod rate constant     1/hr       .
+    ## 12   PARAM  KOUT  Resp elim rate constant     1/hr       .
+    ## 13   PARAM  IC50 Conc giving 50% max resp    ng/ml       .
+    ## 14     CMT   GUT       Dosing compartment       mg       .
+    ## 15     CMT  CENT      Central compartment       mg       .
+    ## 16     CMT  RESP                 Response unitless       .
+    ## 17 CAPTURE    DV       Dependent variable    ng/ml       .
+    ## 18 CAPTURE    CP     Plasma concentration    ng/ml       .
+
 ``` r
 list.files(soloc(mod))
 ```
 
-    ## [1] "annot-details.RDS"       "annot-mread-source.cpp" 
-    ## [3] "annot-mread-source.o"    "annot-mread-source.so"  
-    ## [5] "annot-so-a6310466f02.so"
+    ## [1] "mrgsolve.so"

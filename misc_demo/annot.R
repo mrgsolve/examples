@@ -4,6 +4,7 @@
 ##'     variant: markdown_github
 ##' ---
 
+knitr::opts_chunk$set(comment='.')
 
 ##' 
 ##' # Annotated model specification

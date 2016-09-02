@@ -1,3 +1,7 @@
+``` r
+knitr::opts_chunk$set(comment='.')
+```
+
 Annotated model specification
 =============================
 
@@ -68,21 +72,21 @@ Parameter list and compartments as usual
 param(mod)
 ```
 
-    ## 
-    ##  Model parameters (N=3):
-    ##  name value . name value
-    ##  CL   1.25  | VC   20.8 
-    ##  EMAX 33    | .    .
+    . 
+    .  Model parameters (N=3):
+    .  name value . name value
+    .  CL   1.25  | VC   20.8 
+    .  EMAX 33    | .    .
 
 ``` r
 init(mod)
 ```
 
-    ## 
-    ##  Model initial conditions (N=3):
-    ##  name       value . name       value
-    ##  CENT (2)   0     | RESP (3)   0    
-    ##  GUT (1)    0     | . ...      .
+    . 
+    .  Model initial conditions (N=3):
+    .  name       value . name       value
+    .  CENT (2)   0     | RESP (3)   0    
+    .  GUT (1)    0     | . ...      .
 
 We can retreive the model annotations like this
 
@@ -90,25 +94,25 @@ We can retreive the model annotations like this
 mrgsolve:::details(mod) 
 ```
 
-    ## [[1]]
-    ##   block name                  descr unit options
-    ## 1 PARAM   CL              Clearance L/hr      PK
-    ## 2 PARAM   VC Volume of distribution    L      PK
-    ## 3 PARAM EMAX         Maximum effect    .      PD
-    ## 
-    ## [[2]]
-    ##   block name               descr  unit options
-    ## 1   CMT  GUT  Dosing compartment    mg       .
-    ## 2   CMT CENT Central compartment    mg       .
-    ## 3   CMT RESP            Response units       .
+    . [[1]]
+    .   block name                  descr unit options
+    . 1 PARAM   CL              Clearance L/hr      PK
+    . 2 PARAM   VC Volume of distribution    L      PK
+    . 3 PARAM EMAX         Maximum effect    .      PD
+    . 
+    . [[2]]
+    .   block name               descr  unit options
+    . 1   CMT  GUT  Dosing compartment    mg       .
+    . 2   CMT CENT Central compartment    mg       .
+    . 3   CMT RESP            Response units       .
 
 ``` r
 list.files(soloc(mod))
 ```
 
-    ## [1] "annot-details.RDS"        "annot-mread-source.cpp"  
-    ## [3] "annot-mread-source.o"     "annot-mread-source.so"   
-    ## [5] "annot-so-171c5b43e798.so"
+    . [1] "annot-details.RDS"        "annot-mread-source.cpp"  
+    . [3] "annot-mread-source.o"     "annot-mread-source.so"   
+    . [5] "annot-so-17403a6877d9.so"
 
 Details from `mrgsolve:::house()`
 =================================
@@ -121,56 +125,56 @@ mod <- mrgsolve:::house()
 blocks(mod, PARAM,CMT,CAPTURE)
 ```
 
-    ## 
-    ## Model file: housemodel.cpp 
-    ## 
-    ## $PARAM
-    ##  >> annotated=TRUE
-    ## CL   : 1    : Clearance  (L/hr)
-    ## VC   : 20   : Volume of distribution (L)
-    ## KA   : 1.2  : Absorption rate constant (1/hr)
-    ## F1   : 1.0  : Bioavailability fraction (.)
-    ## WT   : 70   : Weight (kg)
-    ## SEX  : 0    : Covariate female sex
-    ## WTCL : 0.75 : Exponent WT on CL
-    ## WTVC : 1.00 : Exponent WT on VC
-    ## SEXCL: 0.7  : Prop cov effect on CL
-    ## SEXVC: 0.85 : Prop cov effect on VC
-    ## KIN  : 100  : Resp prod rate constant (1/hr)
-    ## KOUT : 2    : Resp elim rate constant (1/hr)
-    ## IC50 : 10   : Conc giving 50% max resp (ng/ml)
-    ## 
-    ## $CMT
-    ##  >> annotated=TRUE
-    ## GUT  : Dosing compartment (mg)
-    ## CENT : Central compartment (mg)
-    ## RESP : Response (unitless)
-    ## 
-    ## $CAPTURE
-    ##  >> annotated=TRUE
-    ## DV: Dependent variable (ng/ml)
-    ## CP: Plasma concentration (ng/ml)
+    . 
+    . Model file: housemodel.cpp 
+    . 
+    . $PARAM
+    .  >> annotated=TRUE
+    . CL   : 1    : Clearance  (L/hr)
+    . VC   : 20   : Volume of distribution (L)
+    . KA   : 1.2  : Absorption rate constant (1/hr)
+    . F1   : 1.0  : Bioavailability fraction (.)
+    . WT   : 70   : Weight (kg)
+    . SEX  : 0    : Covariate female sex
+    . WTCL : 0.75 : Exponent WT on CL
+    . WTVC : 1.00 : Exponent WT on VC
+    . SEXCL: 0.7  : Prop cov effect on CL
+    . SEXVC: 0.85 : Prop cov effect on VC
+    . KIN  : 100  : Resp prod rate constant (1/hr)
+    . KOUT : 2    : Resp elim rate constant (1/hr)
+    . IC50 : 10   : Conc giving 50% max resp (ng/ml)
+    . 
+    . $CMT
+    .  >> annotated=TRUE
+    . GUT  : Dosing compartment (mg)
+    . CENT : Central compartment (mg)
+    . RESP : Response (unitless)
+    . 
+    . $CAPTURE
+    .  >> annotated=TRUE
+    . DV: Dependent variable (ng/ml)
+    . CP: Plasma concentration (ng/ml)
 
 ``` r
 mrgsolve:::details(mod) %>% (dplyr::bind_rows)
 ```
 
-    ##      block  name                    descr     unit options
-    ## 1    PARAM    CL                Clearance     L/hr       .
-    ## 2    PARAM    VC   Volume of distribution        L       .
-    ## 3    PARAM    KA Absorption rate constant     1/hr       .
-    ## 4    PARAM    F1 Bioavailability fraction        .       .
-    ## 5    PARAM    WT                   Weight       kg       .
-    ## 6    PARAM   SEX     Covariate female sex        .       .
-    ## 7    PARAM  WTCL        Exponent WT on CL        .       .
-    ## 8    PARAM  WTVC        Exponent WT on VC        .       .
-    ## 9    PARAM SEXCL    Prop cov effect on CL        .       .
-    ## 10   PARAM SEXVC    Prop cov effect on VC        .       .
-    ## 11   PARAM   KIN  Resp prod rate constant     1/hr       .
-    ## 12   PARAM  KOUT  Resp elim rate constant     1/hr       .
-    ## 13   PARAM  IC50 Conc giving 50% max resp    ng/ml       .
-    ## 14     CMT   GUT       Dosing compartment       mg       .
-    ## 15     CMT  CENT      Central compartment       mg       .
-    ## 16     CMT  RESP                 Response unitless       .
-    ## 17 CAPTURE    DV       Dependent variable    ng/ml       .
-    ## 18 CAPTURE    CP     Plasma concentration    ng/ml       .
+    .      block  name                    descr     unit options
+    . 1    PARAM    CL                Clearance     L/hr       .
+    . 2    PARAM    VC   Volume of distribution        L       .
+    . 3    PARAM    KA Absorption rate constant     1/hr       .
+    . 4    PARAM    F1 Bioavailability fraction        .       .
+    . 5    PARAM    WT                   Weight       kg       .
+    . 6    PARAM   SEX     Covariate female sex        .       .
+    . 7    PARAM  WTCL        Exponent WT on CL        .       .
+    . 8    PARAM  WTVC        Exponent WT on VC        .       .
+    . 9    PARAM SEXCL    Prop cov effect on CL        .       .
+    . 10   PARAM SEXVC    Prop cov effect on VC        .       .
+    . 11   PARAM   KIN  Resp prod rate constant     1/hr       .
+    . 12   PARAM  KOUT  Resp elim rate constant     1/hr       .
+    . 13   PARAM  IC50 Conc giving 50% max resp    ng/ml       .
+    . 14     CMT   GUT       Dosing compartment       mg       .
+    . 15     CMT  CENT      Central compartment       mg       .
+    . 16     CMT  RESP                 Response unitless       .
+    . 17 CAPTURE    DV       Dependent variable    ng/ml       .
+    . 18 CAPTURE    CP     Plasma concentration    ng/ml       .

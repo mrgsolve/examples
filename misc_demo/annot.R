@@ -94,6 +94,7 @@ list.files(soloc(mod))
 
 ##' # Details from `mrgsolve:::house()`
 mod <- mrgsolve:::house()
-
+#+
+blocks(mod, PARAM,CMT,CAPTURE)
 mrgsolve:::details(mod) %>% (dplyr::bind_rows)
 

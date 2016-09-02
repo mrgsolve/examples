@@ -108,14 +108,50 @@ list.files(soloc(mod))
 
     ## [1] "annot-details.RDS"        "annot-mread-source.cpp"  
     ## [3] "annot-mread-source.o"     "annot-mread-source.so"   
-    ## [5] "annot-so-16fa48cdfe00.so"
+    ## [5] "annot-so-171c5b43e798.so"
 
 Details from `mrgsolve:::house()`
 =================================
 
 ``` r
 mod <- mrgsolve:::house()
+```
 
+``` r
+blocks(mod, PARAM,CMT,CAPTURE)
+```
+
+    ## 
+    ## Model file: housemodel.cpp 
+    ## 
+    ## $PARAM
+    ##  >> annotated=TRUE
+    ## CL   : 1    : Clearance  (L/hr)
+    ## VC   : 20   : Volume of distribution (L)
+    ## KA   : 1.2  : Absorption rate constant (1/hr)
+    ## F1   : 1.0  : Bioavailability fraction (.)
+    ## WT   : 70   : Weight (kg)
+    ## SEX  : 0    : Covariate female sex
+    ## WTCL : 0.75 : Exponent WT on CL
+    ## WTVC : 1.00 : Exponent WT on VC
+    ## SEXCL: 0.7  : Prop cov effect on CL
+    ## SEXVC: 0.85 : Prop cov effect on VC
+    ## KIN  : 100  : Resp prod rate constant (1/hr)
+    ## KOUT : 2    : Resp elim rate constant (1/hr)
+    ## IC50 : 10   : Conc giving 50% max resp (ng/ml)
+    ## 
+    ## $CMT
+    ##  >> annotated=TRUE
+    ## GUT  : Dosing compartment (mg)
+    ## CENT : Central compartment (mg)
+    ## RESP : Response (unitless)
+    ## 
+    ## $CAPTURE
+    ##  >> annotated=TRUE
+    ## DV: Dependent variable (ng/ml)
+    ## CP: Plasma concentration (ng/ml)
+
+``` r
 mrgsolve:::details(mod) %>% (dplyr::bind_rows)
 ```
 

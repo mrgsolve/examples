@@ -19,7 +19,6 @@ Let's turn this into annotated model.
 @cor @labels ECL EV
 1 0.9 3
 
-
 [MAIN]
 double CLi = CL*exp(ECL);
 double Vi  = V*exp(EV);

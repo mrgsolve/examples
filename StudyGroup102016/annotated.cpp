@@ -8,7 +8,6 @@
 - Date: `r date()`
 - Parent: `1013.cpp`
 
-
 [SET] delta = 0.1, end=48
 
 [PARAM] @annotated
@@ -34,9 +33,7 @@ CENT : 10 : Central compartment (mg)
 ECL : 1     : IIV on CL
 EV  : 0.9 3 : IIV on V
 
-
 [MAIN]
-
 double CLi = CL*exp(ECL);
 double Vi  = V*exp(EV);
 double KAi = KA;
@@ -49,6 +46,5 @@ double DV = CENT/V;
 
 [CAPTURE] @annotated
 DV : Plasma concentration (mg/L)
-
 
 

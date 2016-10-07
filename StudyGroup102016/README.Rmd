@@ -1,0 +1,12 @@
+---
+output: md_document
+---
+# StudyGroup Materials October 11, 2016
+- Scripts
+    - `new_features.R`
+    - `annotated.R`
+- Moodels
+    - `model.cpp`
+    - `annotated.cpp`
+- Output
+    - `annotated.html`

@@ -29,7 +29,7 @@ $CAPTURE CP
 '
 
 mod <- mcode("works", works)
-mod %>% ev(amt=100) %>% mrgsim
+mod %>% ev(amt=100) %>% mrgsim %>% plot
 
 
 ##' Or use typedef capture
@@ -41,9 +41,11 @@ $PKMODEL ncmt=1
 
 $TABLE
 capture CP = CENT/V;
+
 '
 
 mod <- mcode("capture", capture)
+
 mod %>% ev(amt=100) %>% mrgsim
 
 
@@ -63,7 +65,8 @@ mod <- mread("effect", modlib())
 
 
 ##' EXPERIMENTAL: load a batch of models
-mod <- mrgsolve:::modlist(modlib(),pattern="^irm*")
+mod <- mrgsolve:::modlist(modlib())
+
 
 param(mod$irm2)
 see(mod$irm2)

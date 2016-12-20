@@ -21,6 +21,10 @@ mod %>%
   mrgsim(end=320) %>% 
   plot(CP~.)
 
+##' 
+see(mod)
+#+
+
 
 ##' ### Viral model
 mod <- mread("viral1",modlib())
@@ -38,6 +42,15 @@ out <-
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))
 
-##' ### Ooops 
 
-mod <- mread("kylebaron", modlib())
+##' ### PK/PD model
+mod <- mread("irm1", modlib())
+#+
+see(mod)
+#+
+mod %>% ev(amt=700,time=50) %>% param(n=1.5,KOUT=0.02) %>%
+  mrgsim(end=480) %>% plot(CP+RESP~.)
+
+
+
+

@@ -1,24 +1,45 @@
 [PROB]
-A plain old model. 
-Let's turn this into annotated model.
+
+# Annotated model
+  - Author: Kyle
+  - Date: `r date()`
+  
+```{r,echo=TRUE} 
+  mod %>% 
+    ev(amt=100, ii=12, addl=3) %>%
+    mrgsim %>% plot
+```
 
 [SET] delta = 0.1, end=48
 
-[PARAM] CL = 1, V = 2, KA = 3
+[PARAM] @annotated
+CL :  1 : Clearance (L/hr)
+V  :  2 : Volume of distribution (L)
+KA :  3 : Absorption rate constant (1/hr)
 
-[FIXED]  F1 = 0.8
+[PARAM]
+KIN = 100, KOUT = 0.2, EC50 = 10
+    
+[FIXED]  @annotated
+F1 :  0.8 : Bioavability
 
-[THETA]
-1.1 0.32 5
+[THETA] @annotated
+1.1  : TVCL
+0.32 : Exponent WT ~ CL
+5    : TVVC
 
-[CMT] GUT 
+[CMT] @annotated
+GUT : Dosing compartment (mg) 
 
-[INIT] CENT = 10
+[INIT] @annotated
+CENT :  10 : Central compartment (mg)
 
-[OMEGA]
-@cor @labels ECL EV
-1 0.9 3
-
+[OMEGA] @cor @annotated
+ECL : 1 : ETA on CL
+EV  : 0.9 3 : ETA on VC
+EKA : 0.2 0.4 1 : ETA on KA
+    
+    
 [MAIN]
 double CLi = CL*exp(ECL);
 double Vi  = V*exp(EV);
@@ -30,6 +51,13 @@ F_GUT      = F1;
 [TABLE]
 double DV = CENT/V;
 
-[CAPTURE] DV
+[CAPTURE]  @annotated
+DV : Plasma concentration (mg/L)
+
+
+
+
+  
+
 
 

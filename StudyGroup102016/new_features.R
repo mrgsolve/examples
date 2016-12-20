@@ -39,8 +39,13 @@ $PARAM CL = 1, V = 20
 $CMT CENT
 $PKMODEL ncmt=1
 
+$MAIN
+capture b = 3;
+
 $TABLE
+double c = 4;
 capture CP = CENT/V;
+capture a = 2/c;
 
 '
 
@@ -57,11 +62,16 @@ mod %>% ev(amt=100) %>% mrgsim
 ##' 
 ##' 
 
+
 modlib()
+?modlib
 modlib(list=TRUE)
 
 mod <- mread("irm2", modlib())
+
 mod <- mread("effect", modlib())
+
+writeLines(mrgsolve:::code(mod),"foo.cpp")
 
 
 ##' EXPERIMENTAL: load a batch of models

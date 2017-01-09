@@ -11,12 +11,8 @@ Get time-after-dose in simulated output
 -   Argument to `mrgsim`: `tad = TRUE`
 
 ``` r
-mod <- mread("pk1cmt", modlib()) %>% param(VC = 50)
+mod <- mread("pk1cmt", modlib(),quiet=TRUE) %>% param(VC = 50)
 ```
-
-    . Compiling pk1cmt ...
-
-    . done.
 
 ``` r
 out <- 
@@ -40,6 +36,20 @@ head(out)
     . 6  1  2.0 2.0  13.53353 84.23002   0 1.6846003
 
 ``` r
+tail(out)
+```
+
+    . Model:  pk1cmt
+
+    .     ID  time  tad          EV1     CENT EV2       CP
+    . 477  1 237.5 21.5 4.628832e-08 172.6898   0 3.453795
+    . 478  1 238.0 22.0 2.773697e-08 170.9715   0 3.419429
+    . 479  1 238.5 22.5 1.667283e-08 169.2703   0 3.385405
+    . 480  1 239.0 23.0 1.006485e-08 167.5860   0 3.351720
+    . 481  1 239.5 23.5 6.050132e-09 165.9185   0 3.318370
+    . 482  1 240.0 24.0 3.631493e-09 164.2676   0 3.285351
+
+``` r
 unique(out$tad)
 ```
 
@@ -57,4 +67,4 @@ ggplot(out, aes(tad,CP,col=factor(dosen))) +
   geom_line(lwd=1)
 ```
 
-![](img/auto_tad-unnamed-chunk-8-1.png)
+![](img/auto_tad-unnamed-chunk-9-1.png)

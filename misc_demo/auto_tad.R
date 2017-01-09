@@ -22,7 +22,7 @@ opts_chunk$set(fig.path="img/auto_tad-",comment='.')
 ##' 
 
 #+
-mod <- mread("pk1cmt", modlib()) %>% param(VC = 50)
+mod <- mread("pk1cmt", modlib(),quiet=TRUE) %>% param(VC = 50)
  
 #+
 out <- 
@@ -32,6 +32,8 @@ out <-
 
 #+
 head(out)
+#+
+tail(out)
 #+
 unique(out$tad)
 

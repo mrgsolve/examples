@@ -66,7 +66,7 @@ idata <- data_frame(ID=1:100,GROUP=ID%%2)
 #+
 mod %>% 
   idata_set(idata, covset="cov2") %>% 
-  ev(amt=100) %>% mrgsim(end=120) %>% plot
+  ev(amt=100) %>% mrgsim(end=48) %>% plot
 
 #+
 mod %>% 

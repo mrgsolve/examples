@@ -71,26 +71,33 @@ mod %>%
   idata_set(idata, covset="cov2") %>% 
   ev(amt=100) %>% mrgsim(end=48) %>% plot
 
-#+
-mod %>% 
-  idata_set(idata, covset="cov2") %>% 
-  simargs %>% lapply(.,head)
 
 
 ##' 
 ##' ## Working with `covset`
 ##' 
+##' - All of the code and workflow that happens "inside" mrgsolve `$ENV` can be implemented in plain old `R`
+##' 
+##' 
+##' 
 
+##' An "environment" where to find symbols on rhs
 e <- as.list(param(mod))
+
+##' Columns to add to the data set
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
 f <- FLAG ~ runif(20,40) | GROUP
+
+##' Create the set of covariates that you want to add
 #+
 cov2 <- covset(d,f,b,a)
+
 #+
 cov2
 
+##' Add covariates to the data
 #+
 idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 
@@ -101,7 +108,6 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 ##' - Store `data.frame`
 ##' - Store `event` objects
 ##' - Store (and call) `function`
-##' 
 ##' 
 ##' 
 

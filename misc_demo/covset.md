@@ -70,31 +70,27 @@ mod %>%
 
 ![](img/covset-unnamed-chunk-6-1.png)
 
-``` r
-mod %>% 
-  idata_set(idata, covset="cov2") %>% 
-  simargs %>% lapply(.,head)
-```
-
-    . $idata
-    .   ID GROUP       WT      AGE SEX     FLAG
-    . 1  1     1 97.06778 38.22576   1 28.24057
-    . 2  2     0 93.41336 34.92769   1 33.62317
-    . 3  3     1 59.34391 54.96774   1 28.24057
-    . 4  4     0 76.94537 38.46215   1 33.62317
-    . 5  5     1 88.71913 61.58669   0 28.24057
-    . 6  6     0 50.48138 43.57346   0 33.62317
-
 Working with `covset`
 ---------------------
 
+-   All of the code and workflow that happens "inside" mrgsolve `$ENV` can be implemented in plain old `R`
+
+An "environment" where to find symbols on rhs
+
 ``` r
 e <- as.list(param(mod))
+```
+
+Columns to add to the data set
+
+``` r
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
 f <- FLAG ~ runif(20,40) | GROUP
 ```
+
+Create the set of covariates that you want to add
 
 ``` r
 cov2 <- covset(d,f,b,a)
@@ -116,6 +112,8 @@ cov2
     . $a
     . [1] "SEX ~ rbinomial(pfe)"
 
+Add covariates to the data
+
 ``` r
 idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 ```
@@ -123,16 +121,16 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
     . # A tibble: 100 × 6
     .       ID GROUP      AGE     FLAG       WT   SEX
     .    <int> <dbl>    <dbl>    <dbl>    <dbl> <dbl>
-    . 1      1     1 56.89700 35.08263 90.49052     1
-    . 2      2     0 20.52915 36.18199 85.44064     0
-    . 3      3     1 20.39806 35.08263 51.62502     0
-    . 4      4     0 23.01154 36.18199 83.46135     0
-    . 5      5     1 34.20830 35.08263 61.99369     1
-    . 6      6     0 67.34234 36.18199 57.98716     1
-    . 7      7     1 29.96251 35.08263 88.32505     0
-    . 8      8     0 25.26993 36.18199 50.81628     1
-    . 9      9     1 66.45105 35.08263 64.45956     0
-    . 10    10     0 62.28655 36.18199 59.65328     1
+    . 1      1     1 44.84579 24.58397 75.91064     1
+    . 2      2     0 72.24736 34.09395 85.44513     1
+    . 3      3     1 57.82068 24.58397 64.81275     1
+    . 4      4     0 59.10636 34.09395 65.99530     1
+    . 5      5     1 65.03113 24.58397 62.37623     0
+    . 6      6     0 37.65363 34.09395 58.28292     1
+    . 7      7     1 53.40942 24.58397 58.84919     0
+    . 8      8     0 55.66629 34.09395 83.10690     0
+    . 9      9     1 44.10355 24.58397 79.84439     1
+    . 10    10     0 57.92789 34.09395 86.38993     0
     . # ... with 90 more rows
 
 Other ways to use `$ENV`

@@ -22,6 +22,8 @@ Because many different data types could possibly be in the mix now, we need to t
 
 You will see illustrated below several functions in the `mrgx` plugin that help you do this. Remember also that since we are importing `R` objects that are `vectors`, `matrices`, and `functions`, we also need to invoke the `Rcpp` plugin.
 
+Note that we are getting and calling an `R` function in this problem. This is fine if no other alternative is available / possible. But be aware that there will be **some** performance ding for this. It would be much more efficient to code an `Rcpp` version of `approx`. We have that function and it does speed things up. Hopefully another vignette coming that illustrates how to set up that function.
+
 About the code
 ==============
 

@@ -57,6 +57,12 @@ opts_chunk$set(fig.path="img/covset-",comment='.')
 ##' plugin.
 ##' 
 ##' 
+##' Note that we are getting and calling an `R` function in this problem.  This is fine
+##' if no other alternative is available / possible.  But be aware that there will be __some__
+##' performance ding for this.  It would be much more efficient to code an `Rcpp` version 
+##' of `approx`.  We have that function and it does speed things up.  Hopefully another
+##' vignette coming that illustrates how to set up that function.
+##' 
 
 
 ##' # About the code

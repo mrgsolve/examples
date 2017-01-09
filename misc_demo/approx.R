@@ -14,9 +14,14 @@ library(ggplot2)
 library(knitr)
 opts_chunk$set(fig.path="img/covset-",comment='.')
 
+##' # About
+##' - This model doesn't really accomplish anything useful.  I coded this up to show how 
+##' we can get `vector`, `matrix` data as well as `R` functions into your simulation.
+##' 
 ##' # Not sure what's going on? 
 ##' 
 ##' - Scroll down to the bottom for some context and discussion.
+##' 
 ##' 
 
 ##' # About the code

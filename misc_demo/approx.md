@@ -5,6 +5,11 @@ library(magrittr)
 library(ggplot2)
 ```
 
+About
+=====
+
+-   This model doesn't really accomplish anything useful. I coded this up to show how we can get `vector`, `matrix` data as well as `R` functions into your simulation.
+
 Not sure what's going on?
 =========================
 

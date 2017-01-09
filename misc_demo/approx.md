@@ -5,24 +5,10 @@ library(magrittr)
 library(ggplot2)
 ```
 
-What problem does this solve?
-=============================
+Not sure what's going on?
+=========================
 
-So you might be asking, why do you need to do all of this? The general goal is to allow you to get a variety of data structures into your model code.
-
-So far, you've been able to get scalar values via the `$PARAM` list. This allows you to say what the `TVCL` is or the `KA` or the patient `WT` etc. When you specifiy parameters with those names, those symbols take (scalar) values and we can use them in the code and we can update those values in a couple of different ways. Note that you also can input matrices in `$OMEGA` and `$SIGMA`, but you don't get direct access to those matrices ... only the variates that were drawn using those matrices.
-
-We've hit the point where getting scalar data into the problem isn't enough. Now, we are working on models that require `vector` data or specification of `matrix` data. Usually we are requiring those data structures in `numeric` format. We would also like to call `R` functions using that data to do calculations necessary for the model simulation to proceed.
-
-The models we are talking about are complex and still fairly unusual. I expect 95% of users to never need stuff like this. But I think it's important for those who do need this extra functionality to be able to access it. Otherwise, the modeling hits a roadblock.
-
-The general mechanism for specifying non-scalar data to get into the problem is through `$ENV`. This block is just regular old `R` code that gets parsed and evaluated into a new `environment`. That environment stays with the model object and we access the objects in that environment or modify them (similar to the way we work with a `$PARAM` list).
-
-Because many different data types could possibly be in the mix now, we need to take an extra step or two to access those objects. This means an extra step to go into the `$ENV` environment, and `get` an object. This usually only needs to be done **ONCE** ... at the start of the problem. We go get the required objects and have them ready to use as the simulation proceeds. This is essentially what the `$PREAMBLE` block is for: it is a C++ function (like `$MAIN`) that gets called once and lets you set up the C++ environment as you please ... including extracting objects from your `$ENV` (or potentially from `.GlobalEnv`) or from other `R` packages.
-
-You will see illustrated below several functions in the `mrgx` plugin that help you do this. Remember also that since we are importing `R` objects that are `vectors`, `matrices`, and `functions`, we also need to invoke the `Rcpp` plugin.
-
-Note that we are getting and calling an `R` function in this problem. This is fine if no other alternative is available / possible. But be aware that there will be **some** performance ding for this. It would be much more efficient to code an `Rcpp` version of `approx`. We have that function and it does speed things up. Hopefully another vignette coming that illustrates how to set up that function.
+-   Scroll down to the bottom for some context and discussion.
 
 About the code
 ==============
@@ -105,3 +91,22 @@ mrgsim(mod, end=-1) %>% as.data.frame
 
     .   ID time xout      yout
     . 1  1    0   13 0.2543653
+
+What problem does this solve?
+=============================
+
+So you might be asking, why do you need to do all of this? The general goal is to allow you to get a variety of data structures into your model code.
+
+So far, you've been able to get scalar values via the `$PARAM` list. This allows you to say what the `TVCL` is or the `KA` or the patient `WT` etc. When you specifiy parameters with those names, those symbols take (scalar) values and we can use them in the code and we can update those values in a couple of different ways. Note that you also can input matrices in `$OMEGA` and `$SIGMA`, but you don't get direct access to those matrices ... only the variates that were drawn using those matrices.
+
+We've hit the point where getting scalar data into the problem isn't enough. Now, we are working on models that require `vector` data or specification of `matrix` data. Usually we are requiring those data structures in `numeric` format. We would also like to call `R` functions using that data to do calculations necessary for the model simulation to proceed.
+
+The models we are talking about are complex and still fairly unusual. I expect 95% of users to never need stuff like this. But I think it's important for those who do need this extra functionality to be able to access it. Otherwise, the modeling hits a roadblock.
+
+The general mechanism for specifying non-scalar data to get into the problem is through `$ENV`. This block is just regular old `R` code that gets parsed and evaluated into a new `environment`. That environment stays with the model object and we access the objects in that environment or modify them (similar to the way we work with a `$PARAM` list).
+
+Because many different data types could possibly be in the mix now, we need to take an extra step or two to access those objects. This means an extra step to go into the `$ENV` environment, and `get` an object. This usually only needs to be done **ONCE** ... at the start of the problem. We go get the required objects and have them ready to use as the simulation proceeds. This is essentially what the `$PREAMBLE` block is for: it is a C++ function (like `$MAIN`) that gets called once and lets you set up the C++ environment as you please ... including extracting objects from your `$ENV` (or potentially from `.GlobalEnv`) or from other `R` packages.
+
+You will see illustrated below several functions in the `mrgx` plugin that help you do this. Remember also that since we are importing `R` objects that are `vectors`, `matrices`, and `functions`, we also need to invoke the `Rcpp` plugin.
+
+Note that we are getting and calling an `R` function in this problem. This is fine if no other alternative is available / possible. But be aware that there will be **some** performance ding for this. It would be much more efficient to code an `Rcpp` version of `approx`. We have that function and it does speed things up. Hopefully another vignette coming that illustrates how to set up that function.

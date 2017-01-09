@@ -94,3 +94,55 @@ cov2
 idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 
 
+
+##' # Other ways to use `$ENV`
+##' 
+##' - Store `data.frame`
+##' - Store `event` objects
+##' - Store (and call) `function`
+##' 
+##' 
+##' 
+
+
+
+code <- '
+$PARAM CL = 1, TVV = 20, KA = 1, WT = 70
+
+$CMT GUT CENT
+$PKMODEL ncmt=1, depot=TRUE
+$SET req=""
+
+$MAIN double V = TVV*(WT/70);
+
+$ENV
+d <- expand.ev(ID=1:10, amt=c(100,300))
+
+e <- ev(amt=100, ii=24, addl=3)
+
+sk <- function(n,...) data_frame(ID=1:n)
+
+wt <- covset(list(WT ~ runif(40,140)))
+
+$TABLE
+capture CP = CENT/V;
+'
+
+#+
+mod <- mcode("env", code)
+
+##' Invoke an event stored in `$ENV`
+#+
+mod %>% ev(object="e") %>% mrgsim(end=120) %>% plot
+
+
+##' Build idata set with covariates from a function in `$ENV`
+#+
+mod %>% 
+  ev(amt=100) %>% 
+  idata_set(object="sk", covset="wt", n=100) %>% 
+  mrgsim(end=48,delta=0.1) %>% plot
+
+
+
+

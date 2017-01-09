@@ -9,7 +9,7 @@ See `$ENV`
 ==========
 
 -   `a`, `b`, `d`, `f` are special formulae that work with `mutate_random` package
--   We create sets of covariates (`covset()`) with these different formulale
+-   We create sets of covariates (`covset()`) with these different formulae
 -   When we call `idata_set`, we can invoke a `covset` and those covariates get added
 
 ``` r
@@ -73,10 +73,10 @@ mod %>%
 ```
 
     . $idata
-    .   ID GROUP       WT      AGE SEX     FLAG
-    . 1  1     1 73.44596 54.90282   1 26.34142
-    . 2  2     0 65.48752 32.55184   0 27.38118
-    . 3  3     1 66.43142 32.55665   1 26.34142
-    . 4  4     0 59.61742 22.29533   1 27.38118
-    . 5  5     1 96.62676 49.07143   1 26.34142
-    . 6  6     0 70.27580 52.84430   0 27.38118
+    .   ID GROUP       WT      AGE SEX    FLAG
+    . 1  1     1 82.25019 51.97839   1 31.9009
+    . 2  2     0 89.67315 42.39946   1 20.3127
+    . 3  3     1 66.84383 45.56175   1 31.9009
+    . 4  4     0 73.97432 66.77579   1 20.3127
+    . 5  5     1 99.36337 28.43061   0 31.9009
+    . 6  6     0 84.87603 75.51178   1 20.3127

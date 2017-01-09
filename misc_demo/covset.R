@@ -18,7 +18,7 @@ opts_chunk$set(fig.path="img/covset-",comment='.')
 ##' # See `$ENV`
 ##' 
 ##' - `a`, `b`, `d`, `f` are special formulae that work with `mutate_random` package
-##' - We create sets of covariates (`covset()`) with these different formulale
+##' - We create sets of covariates (`covset()`) with these different formulae
 ##' - When we call `idata_set`, we can invoke a `covset` and those covariates get added
 ##' 
 ##' 

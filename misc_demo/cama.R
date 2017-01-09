@@ -18,7 +18,7 @@ opts_chunk$set(fig.path="img/cama-",comment='.')
 ##' # `cama` (sah-mah)
 ##' 
 ##' - Russian for "herself" (or female "myself")
-##' - It is what my daughter says when she wants doesn't want any help
+##' - It is what my daughter says when she doesn't want any help
 ##' 
 
 #+

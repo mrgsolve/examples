@@ -10,6 +10,13 @@ Get time-after-dose in simulated output
 
 -   Argument to `mrgsim`: `tad = TRUE`
 
+Some considerations
+-------------------
+
+-   We are keeping track of time of last dose (`TOLD`) as the simulation proceeds
+-   `TOLD` is not currently being made available to use in model code
+-   **QUESTION** Would it be useful to pass `TOLD` back to the user (for example in `$MAIN` or `$TABLE`)?
+
 Load a model
 ------------
 

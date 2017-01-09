@@ -24,7 +24,7 @@ opts_chunk$set(fig.path="img/auto_tad-",comment='.')
 ##' - We are keeping track of time of last dose (`TOLD`) as the simulation proceeds
 ##' - `TOLD` is not currently being made available to use in model code
 ##' - __QUESTION__ Would it be useful to pass `TOLD` back to the user (for example in `$MAIN` or `$TABLE`)?
-##' 
+##' - An error is generated if `tad` is found in `$CAPTURE`
 ##' 
 ##' 
 
@@ -38,8 +38,8 @@ mod <- mread("pk1cmt", modlib(),quiet=TRUE) %>% param(VC = 50)
 #+
 out <- 
   mod %>% 
-  ev(amt=100,ii=24,addl=9) %>% 
-  mrgsim(tad=TRUE,end=240, delta=0.5) 
+  ev(amt=100,ii=24,addl=9) %>% Req(CP) %>%
+  mrgsim(tad=TRUE,end=240, delta=0.5, digits=3) 
 
 #+
 head(out)

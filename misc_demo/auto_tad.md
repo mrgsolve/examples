@@ -16,6 +16,7 @@ Some considerations
 -   We are keeping track of time of last dose (`TOLD`) as the simulation proceeds
 -   `TOLD` is not currently being made available to use in model code
 -   **QUESTION** Would it be useful to pass `TOLD` back to the user (for example in `$MAIN` or `$TABLE`)?
+-   An error is generated if `tad` is found in `$CAPTURE`
 
 Load a model
 ------------
@@ -31,8 +32,8 @@ Simulate with `tad=TRUE`
 ``` r
 out <- 
   mod %>% 
-  ev(amt=100,ii=24,addl=9) %>% 
-  mrgsim(tad=TRUE,end=240, delta=0.5) 
+  ev(amt=100,ii=24,addl=9) %>% Req(CP) %>%
+  mrgsim(tad=TRUE,end=240, delta=0.5, digits=3) 
 ```
 
 ``` r
@@ -41,13 +42,13 @@ head(out)
 
     . Model:  pk1cmt
 
-    .   ID time tad       EV1     CENT EV2        CP
-    . 1  1  0.0 0.0   0.00000  0.00000   0 0.0000000
-    . 2  1  0.0 0.0 100.00000  0.00000   0 0.0000000
-    . 3  1  0.5 0.5  60.65307 39.13461   0 0.7826922
-    . 4  1  1.0 1.0  36.78794 62.48155   0 1.2496311
-    . 5  1  1.5 1.5  22.31302 76.25667   0 1.5251334
-    . 6  1  2.0 2.0  13.53353 84.23002   0 1.6846003
+    .   ID time tad    CP
+    . 1  1  0.0 0.0 0.000
+    . 2  1  0.0 0.0 0.000
+    . 3  1  0.5 0.5 0.783
+    . 4  1  1.0 1.0 1.250
+    . 5  1  1.5 1.5 1.530
+    . 6  1  2.0 2.0 1.680
 
 ``` r
 tail(out)
@@ -55,13 +56,13 @@ tail(out)
 
     . Model:  pk1cmt
 
-    .     ID  time  tad          EV1     CENT EV2       CP
-    . 477  1 237.5 21.5 4.628832e-08 172.6898   0 3.453795
-    . 478  1 238.0 22.0 2.773697e-08 170.9715   0 3.419429
-    . 479  1 238.5 22.5 1.667283e-08 169.2703   0 3.385405
-    . 480  1 239.0 23.0 1.006485e-08 167.5860   0 3.351720
-    . 481  1 239.5 23.5 6.050132e-09 165.9185   0 3.318370
-    . 482  1 240.0 24.0 3.631493e-09 164.2676   0 3.285351
+    .     ID  time  tad   CP
+    . 477  1 237.5 21.5 3.45
+    . 478  1 238.0 22.0 3.42
+    . 479  1 238.5 22.5 3.39
+    . 480  1 239.0 23.0 3.35
+    . 481  1 239.5 23.5 3.32
+    . 482  1 240.0 24.0 3.29
 
 ``` r
 unique(out$tad)

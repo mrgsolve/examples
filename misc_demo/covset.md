@@ -5,8 +5,8 @@ library(magrittr)
 library(ggplot2)
 ```
 
-See `$ENV`
-==========
+See `$ENV` for covariate simulation from bounded parametric distributions
+=========================================================================
 
 -   `a`, `b`, `d`, `f` are special formulae that work with `mutate_random` package
 -   We create sets of covariates (`covset()`) with these different formulae
@@ -36,7 +36,7 @@ $ENV
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
-f <- FLAG ~ runif(20,40)|GROUP
+f <- FLAG ~ runif(20,40) | GROUP
 
 cov1 <- covset(a,b)
 cov2 <- covset(b,d,a,f)
@@ -58,6 +58,8 @@ mod <- mcode("foo", code)
 idata <- data_frame(ID=1:100,GROUP=ID%%2)
 ```
 
+When you call `idata_set`, name the covset you want to invoke
+
 ``` r
 mod %>% 
   idata_set(idata, covset="cov2") %>% 
@@ -73,10 +75,60 @@ mod %>%
 ```
 
     . $idata
-    .   ID GROUP       WT      AGE SEX    FLAG
-    . 1  1     1 82.25019 51.97839   1 31.9009
-    . 2  2     0 89.67315 42.39946   1 20.3127
-    . 3  3     1 66.84383 45.56175   1 31.9009
-    . 4  4     0 73.97432 66.77579   1 20.3127
-    . 5  5     1 99.36337 28.43061   0 31.9009
-    . 6  6     0 84.87603 75.51178   1 20.3127
+    .   ID GROUP       WT      AGE SEX     FLAG
+    . 1  1     1 52.84733 51.83142   1 25.63650
+    . 2  2     0 83.06259 34.01229   1 35.42928
+    . 3  3     1 73.93852 28.91434   1 25.63650
+    . 4  4     0 81.20479 70.65570   1 35.42928
+    . 5  5     1 61.97943 35.82711   1 25.63650
+    . 6  6     0 51.09141 31.12630   0 35.42928
+
+Working with `covset`
+---------------------
+
+``` r
+e <- as.list(param(mod))
+a <- SEX ~ rbinomial(pfe);
+b <- WT[50,100] ~ rnorm(tvwt,40)
+d <- AGE[18,80] ~ rnorm(tvage,20)
+f <- FLAG ~ runif(20,40) | GROUP
+```
+
+``` r
+cov2 <- covset(d,f,b,a)
+```
+
+``` r
+cov2
+```
+
+    . $d
+    . [1] "AGE[18, 80] ~ rnorm(tvage, 20)"
+    . 
+    . $f
+    . [1] "FLAG ~ runif(20, 40) | GROUP"
+    . 
+    . $b
+    . [1] "WT[50, 100] ~ rnorm(tvwt, 40)"
+    . 
+    . $a
+    . [1] "SEX ~ rbinomial(pfe)"
+
+``` r
+idata %>% mrgsolve:::mutate_random(cov2,envir=e)
+```
+
+    . # A tibble: 100 × 6
+    .       ID GROUP      AGE     FLAG       WT   SEX
+    .    <int> <dbl>    <dbl>    <dbl>    <dbl> <dbl>
+    . 1      1     1 47.68337 34.93813 87.38266     0
+    . 2      2     0 49.89021 39.55401 66.56713     0
+    . 3      3     1 65.06705 34.93813 96.36577     1
+    . 4      4     0 73.71007 39.55401 54.87358     1
+    . 5      5     1 31.91524 34.93813 96.11376     1
+    . 6      6     0 60.58525 39.55401 81.11045     0
+    . 7      7     1 54.13069 34.93813 75.05758     0
+    . 8      8     0 35.05462 39.55401 87.83776     1
+    . 9      9     1 44.17229 34.93813 85.69503     1
+    . 10    10     0 41.26560 39.55401 57.41268     0
+    . # ... with 90 more rows

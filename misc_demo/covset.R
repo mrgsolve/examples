@@ -15,7 +15,7 @@ library(knitr)
 opts_chunk$set(fig.path="img/covset-",comment='.')
 
 
-##' # See `$ENV`
+##' # See `$ENV` for covariate simulation from bounded parametric distributions
 ##' 
 ##' - `a`, `b`, `d`, `f` are special formulae that work with `mutate_random` package
 ##' - We create sets of covariates (`covset()`) with these different formulae
@@ -47,7 +47,7 @@ $ENV
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
-f <- FLAG ~ runif(20,40)|GROUP
+f <- FLAG ~ runif(20,40) | GROUP
 
 cov1 <- covset(a,b)
 cov2 <- covset(b,d,a,f)
@@ -59,9 +59,11 @@ capture CP = CENT/V;
 #+
 mod <- mcode("foo", code)
 
+
 #+
 idata <- data_frame(ID=1:100,GROUP=ID%%2)
 
+##' When you call `idata_set`, name the covset you want to invoke
 
 #+
 mod %>% 
@@ -72,5 +74,23 @@ mod %>%
 mod %>% 
   idata_set(idata, covset="cov2") %>% 
   simargs %>% lapply(.,head)
+
+
+##' 
+##' ## Working with `covset`
+##' 
+
+e <- as.list(param(mod))
+a <- SEX ~ rbinomial(pfe);
+b <- WT[50,100] ~ rnorm(tvwt,40)
+d <- AGE[18,80] ~ rnorm(tvage,20)
+f <- FLAG ~ runif(20,40) | GROUP
+#+
+cov2 <- covset(d,f,b,a)
+#+
+cov2
+
+#+
+idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 
 

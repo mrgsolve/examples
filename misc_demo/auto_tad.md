@@ -10,9 +10,16 @@ Get time-after-dose in simulated output
 
 -   Argument to `mrgsim`: `tad = TRUE`
 
+Load a model
+------------
+
+-   And we'll increase the volume to get some accumulation
+
 ``` r
 mod <- mread("pk1cmt", modlib(),quiet=TRUE) %>% param(VC = 50)
 ```
+
+Simulate with `tad=TRUE`
 
 ``` r
 out <- 
@@ -58,9 +65,13 @@ unique(out$tad)
     . [29] 14.0 14.5 15.0 15.5 16.0 16.5 17.0 17.5 18.0 18.5 19.0 19.5 20.0 20.5
     . [43] 21.0 21.5 22.0 22.5 23.0 23.5 24.0
 
+Mark the dose number
+
 ``` r
 out %<>% mutate(dosen = 1+(time-tad)/24)
 ```
+
+Plot
 
 ``` r
 ggplot(out, aes(tad,CP,col=factor(dosen))) + 

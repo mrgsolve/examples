@@ -21,9 +21,13 @@ opts_chunk$set(fig.path="img/auto_tad-",comment='.')
 ##' 
 ##' 
 
+##' ## Load a model 
+##' 
+##' - And we'll increase the volume to get some accumulation
 #+
 mod <- mread("pk1cmt", modlib(),quiet=TRUE) %>% param(VC = 50)
  
+##' Simulate with `tad=TRUE`
 #+
 out <- 
   mod %>% 
@@ -37,9 +41,10 @@ tail(out)
 #+
 unique(out$tad)
 
-##+
+##' Mark the dose number
 out %<>% mutate(dosen = 1+(time-tad)/24)
 
+##' Plot
 #+
 ggplot(out, aes(tad,CP,col=factor(dosen))) + 
   geom_line(lwd=1)

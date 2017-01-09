@@ -31,6 +31,7 @@ WT = 70, AGE = 50, SEX = 0
 
 $CMT GUT CENT
 $PKMODEL ncmt=1, depot=TRUE
+$SET req=""
 
 $MAIN
 double CL = TVCL*pow(WT/70,0.75);
@@ -50,6 +51,9 @@ f <- FLAG ~ runif(20,40)|GROUP
 
 cov1 <- covset(a,b)
 cov2 <- covset(b,d,a,f)
+
+$TABLE
+capture CP = CENT/V;
 '
 
 #+

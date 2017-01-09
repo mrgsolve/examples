@@ -13,6 +13,7 @@ See `$ENV` for covariate simulation from bounded parametric distributions
 -   When we call `idata_set`, we can invoke a `covset` and those covariates get added
 -   The `covset` stuff (with formula parsing) is located here:
     -   <https://github.com/kylebmetrum/dmutate>
+-   In the `mrgsolve` implementation, we attach parameters to the evaluation environment, so we can use parameter names in the formulae.
 
 ``` r
 code <- '
@@ -121,16 +122,16 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
     . # A tibble: 100 × 6
     .       ID GROUP      AGE     FLAG       WT   SEX
     .    <int> <dbl>    <dbl>    <dbl>    <dbl> <dbl>
-    . 1      1     1 44.84579 24.58397 75.91064     1
-    . 2      2     0 72.24736 34.09395 85.44513     1
-    . 3      3     1 57.82068 24.58397 64.81275     1
-    . 4      4     0 59.10636 34.09395 65.99530     1
-    . 5      5     1 65.03113 24.58397 62.37623     0
-    . 6      6     0 37.65363 34.09395 58.28292     1
-    . 7      7     1 53.40942 24.58397 58.84919     0
-    . 8      8     0 55.66629 34.09395 83.10690     0
-    . 9      9     1 44.10355 24.58397 79.84439     1
-    . 10    10     0 57.92789 34.09395 86.38993     0
+    . 1      1     1 52.00832 33.18963 56.39856     1
+    . 2      2     0 61.83073 30.38936 50.83221     1
+    . 3      3     1 49.60105 33.18963 86.39854     1
+    . 4      4     0 39.07223 30.38936 64.46782     1
+    . 5      5     1 54.91050 33.18963 57.56074     1
+    . 6      6     0 31.75536 30.38936 69.50669     1
+    . 7      7     1 49.07430 33.18963 70.85583     1
+    . 8      8     0 64.34133 30.38936 60.43226     1
+    . 9      9     1 30.61147 33.18963 50.75021     1
+    . 10    10     0 63.36202 30.38936 88.65888     0
     . # ... with 90 more rows
 
 Other ways to use `$ENV`

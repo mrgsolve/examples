@@ -22,6 +22,8 @@ opts_chunk$set(fig.path="img/covset-",comment='.')
 ##' - When we call `idata_set`, we can invoke a `covset` and those covariates get added
 ##' - The `covset` stuff (with formula parsing) is located here:
 ##'     - https://github.com/kylebmetrum/dmutate
+##' - In the `mrgsolve` implementation, we attach parameters to the evaluation environment, so 
+##' we can use parameter names in the formulae.
 ##' 
 ##' 
 

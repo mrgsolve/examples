@@ -19,7 +19,7 @@ See `$ENV` for covariate simulation from bounded parametric distributions
 code <- '
 $PARAM TVCL = 1, TVV = 20, TVKA = 1
 pfe = 0.7, tvwt = 80, tvage = 48
-WT = 70, AGE = 50, SEX = 0
+WT = 70, AGE = 50, SEX = 0, theta3 = 11
 
 $CMT GUT CENT
 $PKMODEL ncmt=1, depot=TRUE
@@ -36,13 +36,14 @@ if(AGE > 65) V = V*0.8;
 $CAPTURE SEX AGE WT
 
 $ENV
+z <- b ~ mutate(11)
 a <- SEX ~ rbinomial(pfe);
-b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
-f <- FLAG ~ runif(20,40) | GROUP
+b <- WT ~ mutate(AGE*2-b)
+f <- FLAG ~ runif(20,40) | STUDY
 
-cov1 <- covset(a,b)
-cov2 <- covset(b,d,a,f)
+cov1 <- covset(z,a,d,b)
+cov2 <- covset(z,a,d,b,f)
 
 $TABLE
 capture CP = CENT/V;
@@ -58,7 +59,7 @@ mod <- mcode("foo", code)
     . done.
 
 ``` r
-idata <- data_frame(ID=1:100,GROUP=ID%%2)
+idata <- data_frame(ID=1:100,STUDY=ID%%2)
 ```
 
 When you call `idata_set`, name the covset you want to invoke
@@ -88,7 +89,7 @@ Columns to add to the data set
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
-f <- FLAG ~ runif(20,40) | GROUP
+f <- FLAG ~ runif(20,40) | STUDY
 ```
 
 Create the set of covariates that you want to add
@@ -105,13 +106,16 @@ cov2
     . [1] "AGE[18, 80] ~ rnorm(tvage, 20)"
     . 
     . $f
-    . [1] "FLAG ~ runif(20, 40) | GROUP"
+    . [1] "FLAG ~ runif(20, 40) | STUDY"
     . 
     . $b
     . [1] "WT[50, 100] ~ rnorm(tvwt, 40)"
     . 
     . $a
     . [1] "SEX ~ rbinomial(pfe)"
+    . 
+    . attr(,"class")
+    . [1] "covset"
 
 Add covariates to the data
 
@@ -120,18 +124,18 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 ```
 
     . # A tibble: 100 × 6
-    .       ID GROUP      AGE     FLAG       WT   SEX
+    .       ID STUDY      AGE     FLAG       WT   SEX
     .    <int> <dbl>    <dbl>    <dbl>    <dbl> <dbl>
-    . 1      1     1 52.00832 33.18963 56.39856     1
-    . 2      2     0 61.83073 30.38936 50.83221     1
-    . 3      3     1 49.60105 33.18963 86.39854     1
-    . 4      4     0 39.07223 30.38936 64.46782     1
-    . 5      5     1 54.91050 33.18963 57.56074     1
-    . 6      6     0 31.75536 30.38936 69.50669     1
-    . 7      7     1 49.07430 33.18963 70.85583     1
-    . 8      8     0 64.34133 30.38936 60.43226     1
-    . 9      9     1 30.61147 33.18963 50.75021     1
-    . 10    10     0 63.36202 30.38936 88.65888     0
+    . 1      1     1 60.54713 21.34664 82.90659     0
+    . 2      2     0 44.87364 36.33189 55.51182     1
+    . 3      3     1 42.28185 21.34664 81.05537     1
+    . 4      4     0 67.19725 36.33189 73.68500     1
+    . 5      5     1 43.91645 21.34664 63.65002     0
+    . 6      6     0 23.44385 36.33189 64.86243     1
+    . 7      7     1 29.91474 21.34664 93.36886     0
+    . 8      8     0 29.15617 36.33189 56.29638     1
+    . 9      9     1 35.33560 21.34664 91.90319     0
+    . 10    10     0 46.97154 36.33189 81.55342     1
     . # ... with 90 more rows
 
 Other ways to use `$ENV`

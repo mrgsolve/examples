@@ -30,7 +30,7 @@ opts_chunk$set(fig.path="img/covset-",comment='.')
 code <- '
 $PARAM TVCL = 1, TVV = 20, TVKA = 1
 pfe = 0.7, tvwt = 80, tvage = 48
-WT = 70, AGE = 50, SEX = 0
+WT = 70, AGE = 50, SEX = 0, theta3 = 11
 
 $CMT GUT CENT
 $PKMODEL ncmt=1, depot=TRUE
@@ -47,13 +47,14 @@ if(AGE > 65) V = V*0.8;
 $CAPTURE SEX AGE WT
 
 $ENV
+z <- b ~ mutate(11)
 a <- SEX ~ rbinomial(pfe);
-b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
-f <- FLAG ~ runif(20,40) | GROUP
+b <- WT ~ mutate(AGE*2-b)
+f <- FLAG ~ runif(20,40) | STUDY
 
-cov1 <- covset(a,b)
-cov2 <- covset(b,d,a,f)
+cov1 <- covset(z,a,d,b)
+cov2 <- covset(z,a,d,b,f)
 
 $TABLE
 capture CP = CENT/V;
@@ -64,7 +65,7 @@ mod <- mcode("foo", code)
 
 
 #+
-idata <- data_frame(ID=1:100,GROUP=ID%%2)
+idata <- data_frame(ID=1:100,STUDY=ID%%2)
 
 ##' When you call `idata_set`, name the covset you want to invoke
 
@@ -90,7 +91,7 @@ e <- as.list(param(mod))
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
-f <- FLAG ~ runif(20,40) | GROUP
+f <- FLAG ~ runif(20,40) | STUDY
 
 ##' Create the set of covariates that you want to add
 #+

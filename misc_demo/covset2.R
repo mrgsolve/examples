@@ -33,9 +33,8 @@ $PARAM TVCL = 1, TVV = 20, TVKA = 1
 pfe = 0.7, tvwt = 80, tvage = 48
 WT = 70, AGE = 50, SEX = 0, theta3 = 11
 
-$CMT GUT CENT
-$PKMODEL ncmt=1, depot=TRUE
-$SET req=""
+$PKMODEL cmt="GUT,CENT" , depot=TRUE
+$SET req="", delta=0.25
 
 $MAIN
 double CL = TVCL*pow(WT/70,0.75);
@@ -47,18 +46,14 @@ if(AGE > 65) V = V*0.8;
 
 $CAPTURE SEX AGE WT
 
-$ENV
-z <- b ~ mutate(11)
-a <- SEX ~ rbinomial(pfe);
-d <- AGE[18,80] ~ rnorm(tvage,20)
-b <- WT ~ mutate(AGE*2-b)
-f <- FLAG ~ runif(20,40) | STUDY
+$COVSET @name cov1
+b ~ expr(11)
+SEX ~ rbinomial(pfe)
+AGE[18,90] ~ rnorm(tvage,20)
+WT ~ expr(AGE*2-b)
+FLAG ~ runif(20,40) | STUDY
 
-cov1 <- covset(z,a,d,b)
-cov2 <- covset(z,a,d,b,f)
-
-$TABLE
-capture CP = CENT/V;
+$TABLE capture CP = CENT/V;
 '
 
 #+
@@ -72,7 +67,7 @@ idata <- data_frame(ID=1:100,STUDY=ID%%2)
 
 #+
 mod %>% 
-  idata_set(idata, covset="cov2") %>% 
+  idata_set(idata, covset="cov1") %>% 
   ev(amt=100) %>% mrgsim(end=48) %>% plot
 
 
@@ -120,20 +115,21 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 code <- '
 $PARAM CL = 1, TVV = 20, KA = 1, WT = 70
 
-$CMT GUT CENT
-$PKMODEL ncmt=1, depot=TRUE
+$PKMODEL cmt="GUT,CENT", depot=TRUE
 $SET req=""
 
 $MAIN double V = TVV*(WT/70);
+
+$COVSET @name wt
+WT ~ runif(40,140)
 
 $ENV
 d <- expand.ev(ID=1:10, amt=c(100,300))
 
 e <- ev(amt=100, ii=24, addl=3)
 
-sk <- function(n,...) data_frame(ID=1:n)
+skele <- function(n,...) data_frame(ID=1:n)
 
-wt <- covset(list(WT ~ runif(40,140)))
 
 $TABLE
 capture CP = CENT/V;
@@ -151,7 +147,7 @@ mod %>% ev(object="e") %>% mrgsim(end=120) %>% plot
 #+
 mod %>% 
   ev(amt=100) %>% 
-  idata_set(object="sk", covset="wt", n=100) %>% 
+  idata_set(object="skele", covset="wt", n=100) %>% 
   mrgsim(end=48,delta=0.1) %>% plot
 
 

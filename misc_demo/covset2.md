@@ -37,6 +37,7 @@ if(AGE > 65) V = V*0.8;
 $CAPTURE SEX AGE WT
 
 $COVSET @name cov1
+STUDY ~ expr(sample(ID)%%2)
 b ~ expr(11)
 SEX ~ rbinomial(pfe)
 AGE[18,90] ~ rnorm(tvage,20)
@@ -51,12 +52,8 @@ $TABLE capture CP = CENT/V;
 mod <- mcode("foo", code)
 ```
 
-    . Compiling foo ...
-
-    . done.
-
 ``` r
-idata <- data_frame(ID=1:100,STUDY=ID%%2)
+idata <- data_frame(ID=1:100)
 ```
 
 When you call `idata_set`, name the covset you want to invoke
@@ -68,6 +65,21 @@ mod %>%
 ```
 
 ![](img/covset-unnamed-chunk-6-1.png)
+
+Here's what is happening:
+
+``` r
+mod %>% idata_set(idata, covset="cov1") %>% simargs %>% lapply(head)
+```
+
+    . $idata
+    .   ID STUDY  b SEX      AGE        WT     FLAG
+    . 1  1     1 11   1 35.01608  59.03215 35.33668
+    . 2  2     1 11   1 73.74770 136.49541 35.33668
+    . 3  3     0 11   1 44.67265  78.34530 39.56706
+    . 4  4     1 11   0 52.68216  94.36432 35.33668
+    . 5  5     0 11   1 25.56362  40.12725 39.56706
+    . 6  6     1 11   0 63.15400 115.30800 35.33668
 
 Working with `covset`
 ---------------------
@@ -86,13 +98,14 @@ Columns to add to the data set
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
+s <- STUDY ~ expr(sample(ID)%%2)
 f <- FLAG ~ runif(20,40) | STUDY
 ```
 
 Create the set of covariates that you want to add
 
 ``` r
-cov2 <- covset(d,f,b,a)
+cov2 <- covset(d,s,f,b,a)
 ```
 
 ``` r
@@ -101,6 +114,9 @@ cov2
 
     . $d
     . [1] "AGE[18, 80] ~ rnorm(tvage, 20)"
+    . 
+    . $s
+    . [1] "STUDY ~ expr(sample(ID)%%2)"
     . 
     . $f
     . [1] "FLAG ~ runif(20, 40) | STUDY"
@@ -121,18 +137,18 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
 ```
 
     . # A tibble: 100 × 6
-    .       ID STUDY      AGE     FLAG       WT   SEX
-    .    <int> <dbl>    <dbl>    <dbl>    <dbl> <dbl>
-    . 1      1     1 54.11664 31.28761 59.58850     0
-    . 2      2     0 58.57101 36.40108 52.85154     1
-    . 3      3     1 43.57795 31.28761 61.68500     1
-    . 4      4     0 71.98845 36.40108 86.91161     0
-    . 5      5     1 66.65928 31.28761 73.53049     0
-    . 6      6     0 49.43970 36.40108 93.00608     1
-    . 7      7     1 28.13948 31.28761 99.35700     1
-    . 8      8     0 73.85588 36.40108 93.78655     0
-    . 9      9     1 52.20487 31.28761 87.59485     1
-    . 10    10     0 51.04082 36.40108 87.71596     1
+    .       ID      AGE STUDY     FLAG       WT   SEX
+    .    <int>    <dbl> <dbl>    <dbl>    <dbl> <dbl>
+    . 1      1 42.57292     0 25.82872 96.09889     0
+    . 2      2 36.01879     0 25.82872 75.18640     1
+    . 3      3 66.03805     1 29.04194 95.47189     1
+    . 4      4 50.59217     1 29.04194 81.14880     0
+    . 5      5 46.65063     1 29.04194 74.43486     0
+    . 6      6 64.31989     0 25.82872 51.80531     1
+    . 7      7 50.22581     0 25.82872 84.33909     0
+    . 8      8 36.79871     0 25.82872 82.68266     0
+    . 9      9 58.29132     0 25.82872 50.10891     1
+    . 10    10 26.72953     1 29.04194 93.35832     1
     . # ... with 90 more rows
 
 Other ways to use `$ENV`
@@ -171,17 +187,13 @@ capture CP = CENT/V;
 mod <- mcode("env", code)
 ```
 
-    . Compiling env ...
-
-    . done.
-
 Invoke an event stored in `$ENV`
 
 ``` r
 mod %>% ev(object="e") %>% mrgsim(end=120) %>% plot
 ```
 
-![](img/covset-unnamed-chunk-14-1.png)
+![](img/covset-unnamed-chunk-15-1.png)
 
 Build idata set with covariates from a function in `$ENV`
 
@@ -192,4 +204,4 @@ mod %>%
   mrgsim(end=48,delta=0.1) %>% plot
 ```
 
-![](img/covset-unnamed-chunk-15-1.png)
+![](img/covset-unnamed-chunk-16-1.png)

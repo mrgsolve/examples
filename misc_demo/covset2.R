@@ -12,7 +12,7 @@ library(ggplot2)
 
 #+ echo=FALSE
 library(knitr)
-opts_chunk$set(fig.path="img/covset-",comment='.')
+opts_chunk$set(fig.path="img/covset-",comment='.',message=FALSE)
 
 
 ##' # See `$COVSET` for covariate simulation from bounded parametric distributions
@@ -48,6 +48,7 @@ if(AGE > 65) V = V*0.8;
 $CAPTURE SEX AGE WT
 
 $COVSET @name cov1
+STUDY ~ expr(sample(ID)%%2)
 b ~ expr(11)
 SEX ~ rbinomial(pfe)
 AGE[18,90] ~ rnorm(tvage,20)
@@ -62,7 +63,7 @@ mod <- mcode("foo", code)
 
 
 #+
-idata <- data_frame(ID=1:100,STUDY=ID%%2)
+idata <- data_frame(ID=1:100)
 
 ##' When you call `idata_set`, name the covset you want to invoke
 
@@ -71,6 +72,9 @@ mod %>%
   idata_set(idata, covset="cov1") %>% 
   ev(amt=100) %>% mrgsim(end=48) %>% plot
 
+##' Here's what is happening:
+##+
+mod %>% idata_set(idata, covset="cov1") %>% simargs %>% lapply(head)
 
 
 ##' 
@@ -88,11 +92,12 @@ e <- as.list(param(mod))
 a <- SEX ~ rbinomial(pfe);
 b <- WT[50,100] ~ rnorm(tvwt,40)
 d <- AGE[18,80] ~ rnorm(tvage,20)
+s <- STUDY ~ expr(sample(ID)%%2)
 f <- FLAG ~ runif(20,40) | STUDY
 
 ##' Create the set of covariates that you want to add
 #+
-cov2 <- covset(d,f,b,a)
+cov2 <- covset(d,s,f,b,a)
 
 #+
 cov2

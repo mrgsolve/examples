@@ -5,11 +5,12 @@ library(magrittr)
 library(ggplot2)
 ```
 
-See `$ENV` for covariate simulation from bounded parametric distributions
-=========================================================================
+See `$COVSET` for covariate simulation from bounded parametric distributions
+============================================================================
 
--   `a`, `d`, `f` are special formulae that work with `mutate_random` package
--   Create a formula like `z` or `b` using the mutate function to change columns using `dplyr::mutate`
+-   We specify covariates as random variables, potentially with lower and upper bounds
+-   We can evaluate an expression in the data with a formula using `expr` function
+-   All of these covariates get added to your `data_set` or `idata_set`
 -   We create sets of covariates (`covset()`) with these different formulae
 -   When we call `idata_set`, we can invoke a `covset` and those covariates get added
 -   The `covset` stuff (with formula parsing) is located here:
@@ -122,16 +123,16 @@ idata %>% mrgsolve:::mutate_random(cov2,envir=e)
     . # A tibble: 100 × 6
     .       ID STUDY      AGE     FLAG       WT   SEX
     .    <int> <dbl>    <dbl>    <dbl>    <dbl> <dbl>
-    . 1      1     1 53.02172 24.61528 71.75848     0
-    . 2      2     0 47.07363 39.90425 75.57813     1
-    . 3      3     1 62.51831 24.61528 73.40449     1
-    . 4      4     0 75.44599 39.90425 65.38125     1
-    . 5      5     1 52.45856 24.61528 62.42673     1
-    . 6      6     0 42.08841 39.90425 55.90931     0
-    . 7      7     1 45.88783 24.61528 71.18259     1
-    . 8      8     0 44.71220 39.90425 81.89608     1
-    . 9      9     1 61.53799 24.61528 50.61871     1
-    . 10    10     0 48.60039 39.90425 91.71884     1
+    . 1      1     1 54.11664 31.28761 59.58850     0
+    . 2      2     0 58.57101 36.40108 52.85154     1
+    . 3      3     1 43.57795 31.28761 61.68500     1
+    . 4      4     0 71.98845 36.40108 86.91161     0
+    . 5      5     1 66.65928 31.28761 73.53049     0
+    . 6      6     0 49.43970 36.40108 93.00608     1
+    . 7      7     1 28.13948 31.28761 99.35700     1
+    . 8      8     0 73.85588 36.40108 93.78655     0
+    . 9      9     1 52.20487 31.28761 87.59485     1
+    . 10    10     0 51.04082 36.40108 87.71596     1
     . # ... with 90 more rows
 
 Other ways to use `$ENV`

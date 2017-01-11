@@ -15,10 +15,11 @@ library(knitr)
 opts_chunk$set(fig.path="img/covset-",comment='.')
 
 
-##' # See `$ENV` for covariate simulation from bounded parametric distributions
+##' # See `$COVSET` for covariate simulation from bounded parametric distributions
 ##' 
-##' - `a`, `d`, `f` are special formulae that work with `mutate_random` package
-##' - Create a formula like `z` or `b` using the mutate function to change columns using `dplyr::mutate`
+##' - We specify covariates as random variables, potentially with lower and upper bounds
+##' - We can evaluate an expression in the data with a formula using `expr` function
+##' - All of these covariates get added to your `data_set` or `idata_set`
 ##' - We create sets of covariates (`covset()`) with these different formulae
 ##' - When we call `idata_set`, we can invoke a `covset` and those covariates get added
 ##' - The `covset` stuff (with formula parsing) is located here:

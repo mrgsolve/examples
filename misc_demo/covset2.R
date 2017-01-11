@@ -149,7 +149,7 @@ mod <- mcode("env", code)
 mod %>% ev(object="e") %>% mrgsim(end=120) %>% plot
 
 
-##' Build idata set with covariates from a function in `$ENV`
+##' Build `idata_set` with covariates from a function in `$ENV`
 #+
 mod %>% 
   ev(amt=100) %>% 

@@ -80,7 +80,7 @@ length(sigma)
 
 ##' Quick sensitivity analysis with `simblock` / `rinvchisq`
 #+
-df <- c(1,3,10,30,100,300)
+df <- c(2,3,10,30,100,300)
 n <- 10000
 
 #+

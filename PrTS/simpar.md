@@ -54,8 +54,8 @@ Some really big values for SG1.1
 
     summary(simpost[,"SG1.1"])
 
-    .      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    .      0.00      0.02      0.07    163.50      0.31 202100.00
+    .     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    .     0.00     0.02     0.06    87.68     0.28 75120.00
 
 When `SIGMA` is 1x1 matrix, we use inverse chi-square (`?rinvchisq`)
 distribution to simulate. When `SIGMA` is 2x2 (or more, we use inverse
@@ -96,7 +96,7 @@ By default, `simpar` uses degrees of freedom equal to the length of
 In this case, it is 1 ... so simulated values can be all over the place.
 Quick sensitivity analysis with `simblock` / `rinvchisq`
 
-    df <- c(1,3,10,30,100,300)
+    df <- c(2,3,10,30,100,300)
     n <- 10000
 
     sim <- lapply(df,rinvchisq, n=n,cov=sigma)
@@ -110,11 +110,11 @@ Quick sensitivity analysis with `simblock` / `rinvchisq`
     sims
 
     . # A tibble: 6 × 6
-    .           min     median         mean          max           sd    df
-    .         <dbl>      <dbl>        <dbl>        <dbl>        <dbl> <dbl>
-    . 1 0.001474452 0.06186630 970.81843679 4.325418e+06 5.803142e+04     1
-    . 2 0.004033191 0.03543162   0.09350774 3.412455e+01 6.302146e-01     3
-    . 3 0.007401217 0.03007637   0.03481881 2.953080e-01 1.920555e-02    10
-    . 4 0.012794978 0.02860721   0.02991510 9.308737e-02 8.298091e-03    30
-    . 5 0.017236294 0.02809287   0.02848742 5.095973e-02 4.133225e-03   100
-    . 6 0.019946725 0.02801709   0.02817872 4.016431e-02 2.344304e-03   300
+    .           min     median       mean          max          sd    df
+    .         <dbl>      <dbl>      <dbl>        <dbl>       <dbl> <dbl>
+    . 1 0.002871520 0.04055861 0.23357229 184.28108637 2.855240558     2
+    . 2 0.002856501 0.03496218 0.08382935  41.48439804 0.573109256     3
+    . 3 0.009010382 0.02972494 0.03464130   0.26896092 0.019114611    10
+    . 4 0.012682135 0.02870019 0.03015551   0.10613624 0.008409129    30
+    . 5 0.016615275 0.02826493 0.02860980   0.04956372 0.004114012   100
+    . 6 0.020373859 0.02807145 0.02818327   0.03931045 0.002314293   300

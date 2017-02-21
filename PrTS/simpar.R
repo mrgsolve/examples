@@ -58,7 +58,7 @@ simpost <- metrumrg::simpar(n=1500,
                             theta=unlist(theta),
                             cov=cov,
                             omega=omega,
-                            sigma=matrix(0.026)) %>% data.frame
+                            sigma=sigma) %>% data.frame
 
 ##' Some really big values for SG1.1
 summary(simpost[,"SG1.1"])

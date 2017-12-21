@@ -1,6 +1,6 @@
 ## Comparing the Performance of Four Open-Source Methods for Multiple Parameter Estimation in a Systems Pharmacology Model
 
-Find the poster [here](https://t.co/F07pxybAZb)
+Find the poster [here](http://metrumrg.com/wp-content/uploads/2017/06/Eudy_MtSinai_poster_06.2016.pdf)
 
 Example code:
 

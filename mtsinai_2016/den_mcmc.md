@@ -1,13 +1,22 @@
-    library(mrgsolve)
-    library(magrittr) 
-    library(dplyr)
-    library(MCMCpack)
-    source("functions.R")
+den\_mcmc.R
+================
+kyleb
+Mon Sep 3 15:59:56 2018
+
+``` r
+library(mrgsolve)
+library(magrittr) 
+library(dplyr)
+library(MCMCpack)
+source("functions.R")
+```
 
 The model
 
-    mod <- mread("denpk", "model")
-    param(mod)
+``` r
+mod <- mread("denpk", "model")
+param(mod)
+```
 
     ## 
     ##  Model parameters (N=5):
@@ -16,7 +25,9 @@ The model
     ##  DENKM 188   | DENVP   1324 
     ##  DENVC 2340  | .       .
 
-    init(mod)
+``` r
+init(mod)
+```
 
     ## 
     ##  Model initial conditions (N=3):
@@ -26,57 +37,63 @@ The model
 
 Log prior density without constants:
 
-    nprior <- function(theta,mu=0,tau2=1E-6) {
-      -0.5*tau2*(theta-mu)^2
-    }
-    igprior <- function(theta,a=0.01,b=0.01) {
-      -(a+1)*log(theta) - b/theta
-    }
+``` r
+nprior <- function(theta,mu=0,tau2=1E-6) {
+  -0.5*tau2*(theta-mu)^2
+}
+igprior <- function(theta,a=0.01,b=0.01) {
+  -(a+1)*log(theta) - b/theta
+}
+```
 
 Returns log prior + log likelihood
 
-    mcfun <- function(par,d,n,pred=FALSE) {
-      
-      par <- setNames(par,n)
-      
-      mod %<>% param(lapply(par[which_pk],exp))
-      
-      out<- 
-        mod %>% 
-        data_set(d) %>% 
-        Req(DENCP) %>% 
-        drop.re %>%
-        mrgsim(obsonly=TRUE) %>%
-        filter(!is.na(DENCP) & time!=0)
-      
-      if(pred) return(out)
-      
-      d %<>% filter(time > 0 & evid==0)
-      
-      log.yhat <- log(out$DENCP)
-      log.y    <- log(d$DENmMOL)
-      
-      sig2 <- exp(par[which_sig])
-      
-      data.like <- dnorm(log.y, 
-                         mean = log.yhat, 
-                         sd   = sqrt(sig2), 
-                         log  = TRUE)
-      
-      pri.pkpars <- nprior(par[which_pk])
-      pri.sig2 <- igprior(sig2)
-      jac.sig2 <- log(sig2)
-      sum.prior <- sum(pri.pkpars,pri.sig2,jac.sig2)
-      
-      return(sum(data.like,sum.prior))
-    }
+``` r
+mcfun <- function(par,d,n,pred=FALSE) {
+  
+  par <- setNames(par,n)
+  
+  mod %<>% param(lapply(par[which_pk],exp))
+  
+  out<- 
+    mod %>% 
+    data_set(d) %>% 
+    Req(DENCP) %>% 
+    drop.re %>%
+    mrgsim(obsonly=TRUE) %>%
+    filter(!is.na(DENCP) & time!=0)
+  
+  if(pred) return(out)
+  
+  d %<>% filter(time > 0 & evid==0)
+  
+  log.yhat <- log(out$DENCP)
+  log.y    <- log(d$DENmMOL)
+  
+  sig2 <- exp(par[which_sig])
+  
+  data.like <- dnorm(log.y, 
+                     mean = log.yhat, 
+                     sd   = sqrt(sig2), 
+                     log  = TRUE)
+  
+  pri.pkpars <- nprior(par[which_pk])
+  pri.sig2 <- igprior(sig2)
+  jac.sig2 <- log(sig2)
+  sum.prior <- sum(pri.pkpars,pri.sig2,jac.sig2)
+  
+  return(sum(data.like,sum.prior))
+}
+```
 
 Simulate data
 
-    set.seed(101)
-    d <- sim(1,mod) %>% filter(time <= 4032)
+``` r
+set.seed(101)
+d <- sim(1,mod) %>% filter(time <= 4032)
 
-    head(as.data.frame(d))
+head(as.data.frame(d))
+```
 
     ##   ID time evid   amt cmt   ii addl  DENmMOL
     ## 1  1    0    0 0e+00   0    0    0 0.000000
@@ -88,21 +105,27 @@ Simulate data
 
 Initial estimates
 
-    theta <- log(c(DENCL=6,DENVC=3000, DENVMAX=1000, DENVP=3000, sig2=0.1))
-    which_pk <- grep("DEN", names(theta))
-    which_sig <- grep("sig", names(theta))
+``` r
+theta <- log(c(DENCL=6,DENVC=3000, DENVMAX=1000, DENVP=3000, sig2=0.1))
+which_pk <- grep("DEN", names(theta))
+which_sig <- grep("sig", names(theta))
+```
 
 Fit with `MCMCpack::MCMCmetrop1R`
 
-    contr <- list(fnscale = -1, trace = 0,  maxit = 1500, parscale = theta)
+``` r
+contr <- list(fnscale = -1, trace = 0,  maxit = 1500, parscale = theta)
+```
 
-    fit <- MCMCmetrop1R(fun=mcfun,
-                        theta.init = theta,
-                        burnin=2000, mcmc=2000,
-                        d=d,n=names(theta),
-                        optim.method="Nelder",
-                        verbose = 100, tune=2,
-                        optim.control = contr)
+``` r
+fit <- MCMCmetrop1R(fun=mcfun,
+                    theta.init = theta,
+                    burnin=2000, mcmc=2000,
+                    d=d,n=names(theta),
+                    optim.method="Nelder",
+                    verbose = 100, tune=2,
+                    optim.control = contr)
+```
 
     ## MCMCmetrop1R iteration 1 of 4000 
     ## function value = -1478.96754
@@ -512,7 +535,9 @@ Fit with `MCMCpack::MCMCmetrop1R`
 
 Results
 
-    summary(exp(fit))
+``` r
+summary(exp(fit))
+```
 
     ## 
     ## Iterations = 2001:4000
@@ -539,7 +564,9 @@ Results
     ## var4 520.81668 1.154e+03 1.257e+03 1.338e+03 1499.045
     ## var5   0.02885 3.352e-02 3.805e-02 4.576e-02    2.301
 
-    as.numeric(param(mod))[names(theta)]
+``` r
+as.numeric(param(mod))[names(theta)]
+```
 
     ##   DENCL   DENVC DENVMAX   DENVP    <NA> 
     ##    2.75 2340.00 3110.00 1324.00      NA

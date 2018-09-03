@@ -1,14 +1,23 @@
-    library(mrgsolve)
-    library(minqa)
-    library(methods)
-    library(magrittr) 
-    library(dplyr)
-    source("functions.R")
+den\_newuoa\_NM.R
+================
+kyleb
+Mon Sep 3 15:58:48 2018
+
+``` r
+library(mrgsolve)
+library(minqa)
+library(methods)
+library(magrittr) 
+library(dplyr)
+source("functions.R")
+```
 
 The model
 
-    mod<- mread("denpk", "model")
-    param(mod)
+``` r
+mod<- mread("denpk", "model")
+param(mod)
+```
 
     ## 
     ##  Model parameters (N=5):
@@ -17,7 +26,9 @@ The model
     ##  DENKM 188   | DENVP   1324 
     ##  DENVC 2340  | .       .
 
-    init(mod)
+``` r
+init(mod)
+```
 
     ## 
     ##  Model initial conditions (N=3):
@@ -25,7 +36,9 @@ The model
     ##  DENCENT (2)   0     | DENSC (1)   0    
     ##  DENPER (3)    0     | . ...       .
 
-    see(mod)
+``` r
+see(mod)
+```
 
     ## 
     ## Model file:  denpk.cpp 
@@ -66,35 +79,39 @@ The model
 
 Function returning the objective function
 
-    ols <- function(par,d,n,pred=FALSE) {
-      
-      par <- setNames(lapply(par,exp),n)
-      
-      out<- 
-        mod %>% 
-        param(par) %>%
-        data_set(d) %>% 
-        Req(DENCP) %>% 
-        drop.re %>%
-        mrgsim(obsonly=TRUE) %>%
-        filter(!is.na(DENCP) & time!=0)
-      
-      if(pred) return(out)
-      
-      d %<>% filter(time > 0 & evid==0)
-      
-      log.yhat <- log(out$DENCP)
-      log.y    <- log(d$DENmMOL)
-      
-      return(sum((log.y - log.yhat)^2))
-      
-    }
+``` r
+ols <- function(par,d,n,pred=FALSE) {
+  
+  par <- setNames(lapply(par,exp),n)
+  
+  out<- 
+    mod %>% 
+    param(par) %>%
+    data_set(d) %>% 
+    Req(DENCP) %>% 
+    drop.re %>%
+    mrgsim(obsonly=TRUE) %>%
+    filter(!is.na(DENCP) & time!=0)
+  
+  if(pred) return(out)
+  
+  d %<>% filter(time > 0 & evid==0)
+  
+  log.yhat <- log(out$DENCP)
+  log.y    <- log(d$DENmMOL)
+  
+  return(sum((log.y - log.yhat)^2))
+  
+}
+```
 
 Simulate an abbreviated data set
 
-    set.seed(101)
-    d <- sim(1,mod) %>% filter(time <= 4032)
-    head(as.data.frame(d))
+``` r
+set.seed(101)
+d <- sim(1,mod) %>% filter(time <= 4032)
+head(as.data.frame(d))
+```
 
     ##   ID time evid   amt cmt   ii addl  DENmMOL
     ## 1  1    0    0 0e+00   0    0    0 0.000000
@@ -106,11 +123,15 @@ Simulate an abbreviated data set
 
 Initial estimates
 
-    theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
+``` r
+theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
+```
 
 Fit with `minqa::newuoa`
 
-    fit1 <- newuoa(par=theta, fn=ols, d=d, n=names(theta), control=list(iprint=5))
+``` r
+fit1 <- newuoa(par=theta, fn=ols, d=d, n=names(theta), control=list(iprint=5))
+```
 
     ## npt = 6 , n =  4 
     ## rhobeg =  0.95 , rhoend =  9.5e-07 
@@ -210,8 +231,10 @@ Fit with `minqa::newuoa`
 
 Fit with `stats:: optim`
 
-    contr <- list(trace=2, parscale=theta, maxit=1500)
-    fit2 <- optim(par=theta, fn=ols, d=d, n=names(theta), control=contr)
+``` r
+contr <- list(trace=2, parscale=theta, maxit=1500)
+fit2 <- optim(par=theta, fn=ols, d=d, n=names(theta), control=contr)
+```
 
     ##   Nelder-Mead direct search function minimizer
     ## function value for initial parameters = 336.640378
@@ -361,16 +384,22 @@ Fit with `stats:: optim`
 
 Results
 
-    exp(fit1$par)
+``` r
+exp(fit1$par)
+```
 
     ## [1]    2.69551 2267.90270 3077.24294 1316.95126
 
-    exp(fit2$par)
+``` r
+exp(fit2$par)
+```
 
     ##      DENCL      DENVC    DENVMAX      DENVP 
     ##    2.69575 2267.08848 3078.27709 1318.52305
 
-    as.numeric(param(mod))[names(theta)]
+``` r
+as.numeric(param(mod))[names(theta)]
+```
 
     ##   DENCL   DENVC DENVMAX   DENVP 
     ##    2.75 2340.00 3110.00 1324.00

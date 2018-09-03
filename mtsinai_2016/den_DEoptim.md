@@ -1,13 +1,22 @@
-    library(mrgsolve)
-    library(DEoptim)
-    library(magrittr) 
-    library(dplyr)
-    source("functions.R")
+den\_DEoptim.R
+================
+kyleb
+Mon Sep 3 15:58:54 2018
+
+``` r
+library(mrgsolve)
+library(DEoptim)
+library(magrittr) 
+library(dplyr)
+source("functions.R")
+```
 
 The model
 
-    mod <- mread("denpk", "model")
-    param(mod)
+``` r
+mod <- mread("denpk", "model")
+param(mod)
+```
 
     ## 
     ##  Model parameters (N=5):
@@ -16,7 +25,9 @@ The model
     ##  DENKM 188   | DENVP   1324 
     ##  DENVC 2340  | .       .
 
-    init(mod)
+``` r
+init(mod)
+```
 
     ## 
     ##  Model initial conditions (N=3):
@@ -26,37 +37,41 @@ The model
 
 Returns the value of objective function
 
-    ols <- function(par,d,n,pred=FALSE) {
-      
-      par <- setNames(lapply(par,exp),n)
-      
-      out<- 
-        mod %>% 
-        param(par) %>%
-        data_set(d) %>% 
-        Req(DENCP) %>% 
-        drop.re %>%
-        mrgsim(obsonly=TRUE) %>%
-        filter(!is.na(DENCP) & time!=0)
-      
-      if(pred) return(out)
-      
-      d %<>% filter(time > 0 & evid==0)
-      
-      log.yhat <- log(out$DENCP)
-      log.y    <- log(d$DENmMOL)
-      
-      obj <- sum((log.y - log.yhat)^2, na.rm=TRUE)
-      
-      return(obj)
-    }
+``` r
+ols <- function(par,d,n,pred=FALSE) {
+  
+  par <- setNames(lapply(par,exp),n)
+  
+  out<- 
+    mod %>% 
+    param(par) %>%
+    data_set(d) %>% 
+    Req(DENCP) %>% 
+    drop.re %>%
+    mrgsim(obsonly=TRUE) %>%
+    filter(!is.na(DENCP) & time!=0)
+  
+  if(pred) return(out)
+  
+  d %<>% filter(time > 0 & evid==0)
+  
+  log.yhat <- log(out$DENCP)
+  log.y    <- log(d$DENmMOL)
+  
+  obj <- sum((log.y - log.yhat)^2, na.rm=TRUE)
+  
+  return(obj)
+}
+```
 
 Simulate a data set
 
-    set.seed(101)
-    d <- sim(1,mod) %>% filter(time <= 4032)
+``` r
+set.seed(101)
+d <- sim(1,mod) %>% filter(time <= 4032)
 
-    head(as.data.frame(d))
+head(as.data.frame(d))
+```
 
     ##   ID time evid   amt cmt   ii addl  DENmMOL
     ## 1  1    0    0 0e+00   0    0    0 0.000000
@@ -68,15 +83,19 @@ Simulate a data set
 
 Initial estimates `DEoptim` uses `lower` and `upper`
 
-    theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
-    upper<-log(c(30,10000,10000,10000))
-    lower<-log(c(0.001, 0.001, 0.1, 0.1))
+``` r
+theta <- log(c(DENCL=6, DENVC=3000, DENVMAX=1000, DENVP=3000))
+upper<-log(c(30,10000,10000,10000))
+lower<-log(c(0.001, 0.001, 0.1, 0.1))
+```
 
 Fit with `DEoptim::DEoptim`
 
-    fit <- DEoptim(ols,d=d,n = names(theta),
-                   upper=upper, lower=lower,
-                   control=list(itermax=300))
+``` r
+fit <- DEoptim(ols,d=d,n = names(theta),
+               upper=upper, lower=lower,
+               control=list(itermax=300))
+```
 
     ## Iteration: 1 bestvalit: 385.880712 bestmemit:    1.192689    5.158434    0.578591    7.209640
     ## Iteration: 2 bestvalit: 97.606776 bestmemit:    0.224142    8.751962    8.478294    2.106225
@@ -384,12 +403,16 @@ Fit with `DEoptim::DEoptim`
 
 Results
 
-    exp(fit$optim$bestmem)
+``` r
+exp(fit$optim$bestmem)
+```
 
     ##        par1        par2        par3        par4 
     ##    2.702099 2370.338409 3087.305919 1254.706264
 
-    as.numeric(param(mod))[names(theta)]
+``` r
+as.numeric(param(mod))[names(theta)]
+```
 
     ##   DENCL   DENVC DENVMAX   DENVP 
     ##    2.75 2340.00 3110.00 1324.00

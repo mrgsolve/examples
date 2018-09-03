@@ -62,7 +62,7 @@ mcfun <- function(par,d,n,pred=FALSE) {
 
 ##' Simulate data
 set.seed(101)
-d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
+d <- sim(1,mod) %>% filter(time <= 4032)
 
 head(as.data.frame(d))
 

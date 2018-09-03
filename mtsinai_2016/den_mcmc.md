@@ -74,17 +74,17 @@ Returns log prior + log likelihood
 Simulate data
 
     set.seed(101)
-    d <- sim(1,mod,template(mod)) %>% filter(time <= 4032)
+    d <- sim(1,mod) %>% filter(time <= 4032)
 
     head(as.data.frame(d))
 
-    ##   ID time evid   amt cmt   ii addl dose  DENmMOL irep
-    ## 1  1    0    0 0e+00   0    0    0   10 0.000000    1
-    ## 2  1    0    1 1e+07   1 4032    3   10 0.000000    1
-    ## 3  1   12    0 0e+00   0    0    0   10 1.655885    1
-    ## 4  1   34    0 0e+00   0    0    0   10 3.758968    1
-    ## 5  1  168    0 0e+00   0    0    0   10 5.909730    1
-    ## 6  1  336    0 0e+00   0    0    0   10 6.741199    1
+    ##   ID time evid   amt cmt   ii addl  DENmMOL
+    ## 1  1    0    0 0e+00   0    0    0 0.000000
+    ## 2  1    0    1 1e+07   1 4032    3 0.000000
+    ## 3  1   12    0 0e+00   0    0    0 1.655885
+    ## 4  1   34    0 0e+00   0    0    0 3.758968
+    ## 5  1  168    0 0e+00   0    0    0 5.909730
+    ## 6  1  336    0 0e+00   0    0    0 6.741199
 
 Initial estimates
 
@@ -105,409 +105,409 @@ Fit with `MCMCpack::MCMCmetrop1R`
                         optim.control = contr)
 
     ## MCMCmetrop1R iteration 1 of 4000 
-    ## function value = -1994.92371
+    ## function value = -1478.96754
     ## theta = 
-    ##    1.78810
-    ##    8.02417
-    ##    6.97610
-    ##    8.10815
-    ##   -2.16963
+    ##    1.78701
+    ##    8.02474
+    ##    6.97452
+    ##    8.11488
+    ##   -2.13668
     ## Metropolis acceptance rate = 1.00000
     ## 
     ## MCMCmetrop1R iteration 101 of 4000 
-    ## function value = -243.21870
+    ## function value = -165.35841
     ## theta = 
-    ##    1.97338
-    ##    8.14424
-    ##    6.61981
-    ##    7.53677
-    ##    1.53071
-    ## Metropolis acceptance rate = 0.51485
+    ##    1.91545
+    ##    8.29164
+    ##    6.74728
+    ##    7.38028
+    ##    1.75170
+    ## Metropolis acceptance rate = 0.44554
     ## 
     ## MCMCmetrop1R iteration 201 of 4000 
-    ## function value = -236.65006
+    ## function value = -160.60871
     ## theta = 
-    ##    1.78760
-    ##    7.94391
-    ##    6.45321
-    ##    7.23084
-    ##    0.92867
-    ## Metropolis acceptance rate = 0.50249
+    ##    1.73355
+    ##    8.04069
+    ##    6.36477
+    ##    6.76810
+    ##    1.19217
+    ## Metropolis acceptance rate = 0.47761
     ## 
     ## MCMCmetrop1R iteration 301 of 4000 
-    ## function value = -233.86130
+    ## function value = -157.84615
     ## theta = 
-    ##    1.35143
-    ##    7.32095
-    ##    5.91696
-    ##    6.58210
-    ##    1.16217
-    ## Metropolis acceptance rate = 0.46179
+    ##    1.23283
+    ##    7.25603
+    ##    5.89426
+    ##    6.26205
+    ##    1.34779
+    ## Metropolis acceptance rate = 0.43854
     ## 
     ## MCMCmetrop1R iteration 401 of 4000 
-    ## function value = -229.92185
+    ## function value = -155.73058
     ## theta = 
-    ##    1.29300
-    ##    7.04903
-    ##    6.12829
-    ##    6.91049
-    ##    1.05521
-    ## Metropolis acceptance rate = 0.45387
+    ##    0.99690
+    ##    6.56405
+    ##    5.91617
+    ##    6.60609
+    ##    1.32113
+    ## Metropolis acceptance rate = 0.44140
     ## 
     ## MCMCmetrop1R iteration 501 of 4000 
-    ## function value = -230.79782
+    ## function value = -154.15153
     ## theta = 
-    ##    1.28063
-    ##    7.45690
-    ##    6.27197
-    ##    6.65450
-    ##    1.11142
-    ## Metropolis acceptance rate = 0.45110
+    ##    0.91101
+    ##    6.88857
+    ##    5.98223
+    ##    6.28285
+    ##    1.16935
+    ## Metropolis acceptance rate = 0.43713
     ## 
     ## MCMCmetrop1R iteration 601 of 4000 
-    ## function value = -231.44416
+    ## function value = -159.29181
     ## theta = 
-    ##    1.21970
-    ##    7.31813
-    ##    6.03396
-    ##    6.42455
-    ##    0.89143
-    ## Metropolis acceptance rate = 0.43594
+    ##    0.76246
+    ##    6.80186
+    ##    5.74450
+    ##    6.02753
+    ##    1.23614
+    ## Metropolis acceptance rate = 0.42429
     ## 
     ## MCMCmetrop1R iteration 701 of 4000 
-    ## function value = -226.88576
+    ## function value = -156.78908
     ## theta = 
-    ##    1.37789
-    ##    7.35801
-    ##    6.38183
-    ##    6.97682
-    ##    1.03291
-    ## Metropolis acceptance rate = 0.42083
+    ##    0.75531
+    ##    6.51672
+    ##    5.80706
+    ##    6.31107
+    ##    1.41239
+    ## Metropolis acceptance rate = 0.40799
     ## 
     ## MCMCmetrop1R iteration 801 of 4000 
-    ## function value = -224.91869
+    ## function value = -156.90216
     ## theta = 
-    ##    1.45210
-    ##    7.59302
-    ##    6.52087
-    ##    6.91744
-    ##    0.82678
-    ## Metropolis acceptance rate = 0.41448
+    ##    0.90357
+    ##    6.99166
+    ##    5.96733
+    ##    6.08742
+    ##    0.80738
+    ## Metropolis acceptance rate = 0.39576
     ## 
     ## MCMCmetrop1R iteration 901 of 4000 
-    ## function value = -224.17283
+    ## function value = -155.18005
     ## theta = 
-    ##    1.37037
-    ##    7.37388
-    ##    6.47694
-    ##    6.94443
-    ##    1.11104
-    ## Metropolis acceptance rate = 0.41731
+    ##    0.82692
+    ##    6.79535
+    ##    5.81181
+    ##    5.99377
+    ##    1.31693
+    ## Metropolis acceptance rate = 0.40511
     ## 
     ## MCMCmetrop1R iteration 1001 of 4000 
-    ## function value = -223.19448
+    ## function value = -155.75859
     ## theta = 
-    ##    1.18613
-    ##    7.18302
-    ##    6.37235
-    ##    6.77467
-    ##    0.79099
-    ## Metropolis acceptance rate = 0.40659
+    ##    0.71601
+    ##    6.48018
+    ##    5.69957
+    ##    6.14557
+    ##    1.11293
+    ## Metropolis acceptance rate = 0.39061
     ## 
     ## MCMCmetrop1R iteration 1101 of 4000 
-    ## function value = -218.72384
+    ## function value = -156.28871
     ## theta = 
-    ##    1.22242
-    ##    7.35747
-    ##    6.42367
-    ##    6.52395
-    ##    0.76097
-    ## Metropolis acceptance rate = 0.40781
+    ##    0.74767
+    ##    6.85483
+    ##    5.75054
+    ##    5.64852
+    ##    1.28950
+    ## Metropolis acceptance rate = 0.39964
     ## 
     ## MCMCmetrop1R iteration 1201 of 4000 
-    ## function value = -212.76032
+    ## function value = -150.90306
     ## theta = 
-    ##    1.26089
-    ##    7.33740
-    ##    6.62050
-    ##    6.77938
-    ##    0.77539
-    ## Metropolis acceptance rate = 0.40550
+    ##    0.83876
+    ##    6.74407
+    ##    6.02078
+    ##    6.23563
+    ##    0.95262
+    ## Metropolis acceptance rate = 0.39384
     ## 
     ## MCMCmetrop1R iteration 1301 of 4000 
-    ## function value = -210.37778
+    ## function value = -154.73241
     ## theta = 
-    ##    1.28505
-    ##    7.28682
-    ##    6.68769
-    ##    6.90280
-    ##    0.64750
-    ## Metropolis acceptance rate = 0.40200
+    ##    1.02402
+    ##    6.78295
+    ##    5.97639
+    ##    6.52350
+    ##    0.92010
+    ## Metropolis acceptance rate = 0.39585
     ## 
     ## MCMCmetrop1R iteration 1401 of 4000 
-    ## function value = -200.68822
+    ## function value = -152.34550
     ## theta = 
-    ##    1.27379
-    ##    7.51539
-    ##    6.84547
-    ##    6.64059
-    ##    0.60214
+    ##    0.86882
+    ##    6.91250
+    ##    5.97037
+    ##    6.01717
+    ##    1.05814
     ## Metropolis acceptance rate = 0.40186
     ## 
     ## MCMCmetrop1R iteration 1501 of 4000 
-    ## function value = -168.08594
+    ## function value = -151.27017
     ## theta = 
-    ##    1.16141
-    ##    7.38717
-    ##    7.20485
-    ##    6.86737
-    ##    0.16704
+    ##    1.08206
+    ##    6.95780
+    ##    6.16178
+    ##    6.44975
+    ##    1.18036
     ## Metropolis acceptance rate = 0.40040
     ## 
     ## MCMCmetrop1R iteration 1601 of 4000 
-    ## function value = -141.24595
+    ## function value = -152.37546
     ## theta = 
-    ##    0.86264
-    ##    7.11728
-    ##    7.27628
-    ##    6.77763
-    ##   -0.37529
-    ## Metropolis acceptance rate = 0.39101
+    ##    0.64579
+    ##    6.51174
+    ##    5.81917
+    ##    5.96480
+    ##    1.10317
+    ## Metropolis acceptance rate = 0.39600
     ## 
     ## MCMCmetrop1R iteration 1701 of 4000 
-    ## function value =   11.44198
+    ## function value = -151.28538
     ## theta = 
-    ##    1.02534
-    ##    7.69909
-    ##    8.00722
-    ##    7.21280
-    ##   -2.86036
-    ## Metropolis acceptance rate = 0.38918
+    ##    0.57645
+    ##    6.68304
+    ##    6.04972
+    ##    5.83134
+    ##    0.90699
+    ## Metropolis acceptance rate = 0.39683
     ## 
     ## MCMCmetrop1R iteration 1801 of 4000 
-    ## function value =   18.49154
+    ## function value = -147.50854
     ## theta = 
-    ##    0.99395
-    ##    7.67779
-    ##    8.10614
-    ##    7.34799
-    ##   -2.96424
-    ## Metropolis acceptance rate = 0.37590
+    ##    0.61921
+    ##    6.52463
+    ##    6.10580
+    ##    6.08572
+    ##    1.20499
+    ## Metropolis acceptance rate = 0.39256
     ## 
     ## MCMCmetrop1R iteration 1901 of 4000 
-    ## function value =   18.63398
+    ## function value = -145.61949
     ## theta = 
-    ##    1.01226
-    ##    7.70454
-    ##    8.05080
-    ##    7.25921
-    ##   -3.03296
-    ## Metropolis acceptance rate = 0.35928
+    ##    0.74908
+    ##    6.67630
+    ##    6.30494
+    ##    6.39461
+    ##    0.99818
+    ## Metropolis acceptance rate = 0.38874
     ## 
     ## MCMCmetrop1R iteration 2001 of 4000 
-    ## function value =   15.97851
+    ## function value = -145.19375
     ## theta = 
-    ##    1.00859
-    ##    7.72891
-    ##    8.15731
-    ##    7.39963
-    ##   -3.00456
-    ## Metropolis acceptance rate = 0.34683
+    ##    0.69747
+    ##    6.66395
+    ##    6.21336
+    ##    6.14180
+    ##    1.10845
+    ## Metropolis acceptance rate = 0.38781
     ## 
     ## MCMCmetrop1R iteration 2101 of 4000 
-    ## function value =   18.81698
+    ## function value = -136.16387
     ## theta = 
-    ##    1.00054
-    ##    7.72217
-    ##    8.03491
-    ##    7.20710
-    ##   -3.04284
-    ## Metropolis acceptance rate = 0.33317
+    ##    0.82180
+    ##    6.91404
+    ##    6.53163
+    ##    6.29558
+    ##    0.60380
+    ## Metropolis acceptance rate = 0.38696
     ## 
     ## MCMCmetrop1R iteration 2201 of 4000 
-    ## function value =   19.28453
+    ## function value = -124.41493
     ## theta = 
-    ##    1.01059
-    ##    7.75323
-    ##    8.05362
-    ##    7.20323
-    ##   -3.21424
-    ## Metropolis acceptance rate = 0.32258
+    ##    1.06087
+    ##    7.29907
+    ##    6.92639
+    ##    6.51210
+    ##    0.39862
+    ## Metropolis acceptance rate = 0.38437
     ## 
     ## MCMCmetrop1R iteration 2301 of 4000 
-    ## function value =   19.97572
+    ## function value = -102.00680
     ## theta = 
-    ##    0.99851
-    ##    7.68204
-    ##    8.10591
-    ##    7.35728
-    ##   -3.21222
-    ## Metropolis acceptance rate = 0.31247
+    ##    1.00348
+    ##    7.23823
+    ##    7.31833
+    ##    6.90955
+    ##    0.15270
+    ## Metropolis acceptance rate = 0.37897
     ## 
     ## MCMCmetrop1R iteration 2401 of 4000 
-    ## function value =   19.97572
+    ## function value =  -15.79713
     ## theta = 
-    ##    0.99851
-    ##    7.68204
-    ##    8.10591
-    ##    7.35728
-    ##   -3.21222
-    ## Metropolis acceptance rate = 0.29946
+    ##    0.88158
+    ##    7.46358
+    ##    7.79774
+    ##    6.99351
+    ##   -2.77866
+    ## Metropolis acceptance rate = 0.37443
     ## 
     ## MCMCmetrop1R iteration 2501 of 4000 
-    ## function value =   14.42526
+    ## function value =   14.00938
     ## theta = 
-    ##    1.02572
-    ##    7.75458
-    ##    8.04379
-    ##    7.21418
-    ##   -2.77010
-    ## Metropolis acceptance rate = 0.28908
+    ##    0.99405
+    ##    7.77359
+    ##    7.97319
+    ##    7.01478
+    ##   -2.79306
+    ## Metropolis acceptance rate = 0.36505
     ## 
     ## MCMCmetrop1R iteration 2601 of 4000 
-    ## function value =   19.89124
+    ## function value =   19.79123
     ## theta = 
-    ##    0.99539
-    ##    7.73533
-    ##    8.06762
-    ##    7.23478
-    ##   -3.12079
-    ## Metropolis acceptance rate = 0.28028
+    ##    0.97470
+    ##    7.67557
+    ##    8.05735
+    ##    7.25540
+    ##   -3.30859
+    ## Metropolis acceptance rate = 0.35333
     ## 
     ## MCMCmetrop1R iteration 2701 of 4000 
-    ## function value =   15.84245
+    ## function value =   19.03431
     ## theta = 
-    ##    0.97193
-    ##    7.65152
-    ##    8.12988
-    ##    7.39891
-    ##   -3.30962
-    ## Metropolis acceptance rate = 0.27249
+    ##    0.96367
+    ##    7.70440
+    ##    8.02679
+    ##    7.16571
+    ##   -3.19399
+    ## Metropolis acceptance rate = 0.34395
     ## 
     ## MCMCmetrop1R iteration 2801 of 4000 
-    ## function value =   17.77725
+    ## function value =   19.57579
     ## theta = 
-    ##    1.01133
-    ##    7.69794
-    ##    8.12538
-    ##    7.37277
-    ##   -3.24893
-    ## Metropolis acceptance rate = 0.26598
+    ##    1.01727
+    ##    7.79601
+    ##    8.02137
+    ##    7.11524
+    ##   -3.45969
+    ## Metropolis acceptance rate = 0.33631
     ## 
     ## MCMCmetrop1R iteration 2901 of 4000 
-    ## function value =   15.86419
+    ## function value =   16.39262
     ## theta = 
-    ##    1.00302
-    ##    7.78909
-    ##    8.09503
-    ##    7.22533
-    ##   -2.93941
-    ## Metropolis acceptance rate = 0.26129
+    ##    0.96527
+    ##    7.73744
+    ##    7.98218
+    ##    7.02789
+    ##   -3.08627
+    ## Metropolis acceptance rate = 0.32713
     ## 
     ## MCMCmetrop1R iteration 3001 of 4000 
-    ## function value =   19.65104
+    ## function value =   18.38386
     ## theta = 
-    ##    1.00048
-    ##    7.74981
-    ##    8.06789
-    ##    7.22784
-    ##   -3.07585
-    ## Metropolis acceptance rate = 0.25691
+    ##    1.02025
+    ##    7.82790
+    ##    8.06431
+    ##    7.13754
+    ##   -3.35441
+    ## Metropolis acceptance rate = 0.31823
     ## 
     ## MCMCmetrop1R iteration 3101 of 4000 
-    ## function value =   19.15993
+    ## function value =   15.33080
     ## theta = 
-    ##    1.00439
-    ##    7.73725
-    ##    8.10926
-    ##    7.32497
-    ##   -3.10316
-    ## Metropolis acceptance rate = 0.25153
+    ##    1.00344
+    ##    7.74881
+    ##    7.95489
+    ##    7.03442
+    ##   -3.14591
+    ## Metropolis acceptance rate = 0.31151
     ## 
     ## MCMCmetrop1R iteration 3201 of 4000 
-    ## function value =   20.01397
+    ## function value =   20.45072
     ## theta = 
-    ##    1.00752
-    ##    7.73038
-    ##    8.07458
-    ##    7.26349
-    ##   -3.06373
-    ## Metropolis acceptance rate = 0.24555
+    ##    0.99430
+    ##    7.77247
+    ##    8.01630
+    ##    7.10515
+    ##   -3.40201
+    ## Metropolis acceptance rate = 0.30397
     ## 
     ## MCMCmetrop1R iteration 3301 of 4000 
-    ## function value =   16.77582
+    ## function value =   16.92088
     ## theta = 
-    ##    1.03457
-    ##    7.71676
-    ##    8.09521
-    ##    7.34560
-    ##   -3.19739
-    ## Metropolis acceptance rate = 0.24114
+    ##    1.04269
+    ##    7.81120
+    ##    8.07304
+    ##    7.21256
+    ##   -3.30684
+    ## Metropolis acceptance rate = 0.29688
     ## 
     ## MCMCmetrop1R iteration 3401 of 4000 
-    ## function value =   20.18502
-    ## theta = 
-    ##    1.00757
-    ##    7.73939
-    ##    8.08421
-    ##    7.27163
-    ##   -3.24851
-    ## Metropolis acceptance rate = 0.23522
-    ## 
-    ## MCMCmetrop1R iteration 3501 of 4000 
-    ## function value =   19.81054
-    ## theta = 
-    ##    0.99011
-    ##    7.70684
-    ##    8.08334
-    ##    7.27991
-    ##   -3.16490
-    ## Metropolis acceptance rate = 0.22908
-    ## 
-    ## MCMCmetrop1R iteration 3601 of 4000 
-    ## function value =   18.89641
-    ## theta = 
-    ##    0.97791
-    ##    7.66010
-    ##    8.10384
-    ##    7.34639
-    ##   -3.18095
-    ## Metropolis acceptance rate = 0.22494
-    ## 
-    ## MCMCmetrop1R iteration 3701 of 4000 
-    ## function value =   20.33411
+    ## function value =   19.54238
     ## theta = 
     ##    0.99806
-    ##    7.71443
-    ##    8.09324
-    ##    7.30082
-    ##   -3.20734
-    ## Metropolis acceptance rate = 0.21967
+    ##    7.77061
+    ##    8.01760
+    ##    7.09137
+    ##   -3.33500
+    ## Metropolis acceptance rate = 0.28962
+    ## 
+    ## MCMCmetrop1R iteration 3501 of 4000 
+    ## function value =   20.04475
+    ## theta = 
+    ##    0.99432
+    ##    7.75595
+    ##    8.05188
+    ##    7.19865
+    ##   -3.26890
+    ## Metropolis acceptance rate = 0.28278
+    ## 
+    ## MCMCmetrop1R iteration 3601 of 4000 
+    ## function value =   20.48443
+    ## theta = 
+    ##    0.99506
+    ##    7.73546
+    ##    8.04772
+    ##    7.20249
+    ##   -3.52615
+    ## Metropolis acceptance rate = 0.27576
+    ## 
+    ## MCMCmetrop1R iteration 3701 of 4000 
+    ## function value =   20.55083
+    ## theta = 
+    ##    1.01097
+    ##    7.78483
+    ##    8.04537
+    ##    7.16067
+    ##   -3.42616
+    ## Metropolis acceptance rate = 0.26858
     ## 
     ## MCMCmetrop1R iteration 3801 of 4000 
-    ## function value =   15.82300
+    ## function value =   18.14819
     ## theta = 
-    ##    0.95581
-    ##    7.65783
-    ##    8.09977
-    ##    7.32635
-    ##   -3.06071
-    ## Metropolis acceptance rate = 0.21626
+    ##    1.01766
+    ##    7.78705
+    ##    8.06273
+    ##    7.19751
+    ##   -3.03362
+    ## Metropolis acceptance rate = 0.26414
     ## 
     ## MCMCmetrop1R iteration 3901 of 4000 
-    ## function value =   17.34716
+    ## function value =   19.20427
     ## theta = 
-    ##    0.98215
-    ##    7.68362
-    ##    8.06501
-    ##    7.28252
-    ##   -3.42347
-    ## Metropolis acceptance rate = 0.21353
+    ##    0.95281
+    ##    7.60649
+    ##    8.02959
+    ##    7.26500
+    ##   -3.36853
+    ## Metropolis acceptance rate = 0.25993
     ## 
     ## 
     ## 
     ## @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    ## The Metropolis acceptance rate was 0.20975
+    ## The Metropolis acceptance rate was 0.25400
     ## @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 Results
@@ -523,21 +523,21 @@ Results
     ## 1. Empirical mean and standard deviation for each variable,
     ##    plus standard error of the mean:
     ## 
-    ##           Mean        SD  Naive SE Time-series SE
-    ## [1,] 2.722e+00  0.039367 0.0008803      4.209e-03
-    ## [2,] 2.233e+03 73.834567 1.6509911      8.228e+00
-    ## [3,] 3.235e+03 89.423079 1.9995608      1.010e+01
-    ## [4,] 1.468e+03 81.385804 1.8198419      1.024e+01
-    ## [5,] 4.391e-02  0.006035 0.0001349      6.832e-04
+    ##           Mean       SD  Naive SE Time-series SE
+    ## [1,]    2.6614   0.1536  0.003434        0.03332
+    ## [2,] 2084.6977 491.7948 10.996867      187.75421
+    ## [3,] 2673.4269 818.1140 18.293584      509.90216
+    ## [4,] 1182.3966 242.0906  5.413310       70.85466
+    ## [5,]    0.3193   0.6583  0.014720        0.33342
     ## 
     ## 2. Quantiles for each variable:
     ## 
-    ##           2.5%       25%       50%       75%     97.5%
-    ## var1    2.6404 2.706e+00 2.718e+00    2.7419    2.8139
-    ## var2 2088.1627 2.172e+03 2.240e+03 2279.9235 2379.7709
-    ## var3 3086.8758 3.169e+03 3.240e+03 3313.9797 3420.7981
-    ## var4 1330.2953 1.412e+03 1.460e+03 1522.7096 1636.8509
-    ## var5    0.0326 4.027e-02 4.315e-02    0.0477    0.0573
+    ##           2.5%       25%       50%       75%    97.5%
+    ## var1   2.18610 2.650e+00 2.705e+00 2.748e+00    2.823
+    ## var2 794.75145 2.102e+03 2.288e+03 2.374e+03 2522.810
+    ## var3 611.05410 2.915e+03 3.034e+03 3.116e+03 3223.642
+    ## var4 520.81668 1.154e+03 1.257e+03 1.338e+03 1499.045
+    ## var5   0.02885 3.352e-02 3.805e-02 4.576e-02    2.301
 
     as.numeric(param(mod))[names(theta)]
 

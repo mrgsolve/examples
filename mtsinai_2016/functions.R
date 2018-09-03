@@ -8,14 +8,14 @@
 ## 5  1  168    0 0e+00   0    0    0   10 5.909730    1
 ## 6  1  336    0 0e+00   0    0    0   10 6.741199    1
 sim <- function(n, mod) {
-  data <- expand.ev(amt = c(10,60,210)*1E6, ii = 4032, addl = 3)
-  data <- mutate(data, dose = amt)
-  x <- c(12,34,seq(0,52,1)*168)
+  data <- expand.ev(dose = c(10,60,210), ii = 4032, addl = 3)
+  data <- mutate(data, amt = dose*1E6)
   out <- mrgsim(
-    mod, data = data, add = x, end = -1, Req = "DENmMOL",
-    carry.out = c("evid", "amt", "cmt", "ii", "addl")
+    mod, data = data,
+    add =c(12,34,seq(0,52,1)*168), 
+    end = -1, Req = "DENmMOL",
+    carry.out = "evid,amt,cmt,ii,addl"
   )
   as_data_frame(out)
-  
 }
 
